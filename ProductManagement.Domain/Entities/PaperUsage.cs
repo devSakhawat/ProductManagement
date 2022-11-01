@@ -35,6 +35,6 @@ namespace ProductManagement.Domain.Entities
       public long MonthlyTotalConter { get; set; }
 
       // Navigation property
-      public virtual Machine Machine { get; set; }
+      public virtual Machine? Machine { get; set; }
    }
 }

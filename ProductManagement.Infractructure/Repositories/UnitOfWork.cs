@@ -75,8 +75,6 @@ namespace ProductManagement.DAL.Repositories
             return TonerRepository;
          }
       }
-
-      ITonerRepository IUnitOfWork.tonerRepository => throw new NotImplementedException();
       #endregion
    }
 }

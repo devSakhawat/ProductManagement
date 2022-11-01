@@ -38,6 +38,6 @@ namespace ProductManagement.Domain.Entities
       public int MachineId { get; set; }
 
       // Navigation Property
-      public virtual Machine Machine { get; set; }
+      public virtual Machine? Machine { get; set; }
    }
 }

@@ -38,17 +38,17 @@ namespace ProductManagement.Domain.Entities
       // Dropdown value
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Project")]
+      //[ForeignKey("ProjectId")]
       public int ProjectId { get; set; }
-      [ForeignKey("ProjectId")]
 
       //Navigation Property
-      public virtual Project Project { get; set; }
+      public virtual Project? Project { get; set; }
 
-      public IEnumerable<Toner> Toners { get; set; }
-      public IEnumerable<DeliveryToner> DeliveryToners { get; set; }
+      public virtual IEnumerable<Toner>? Toners { get; set; }
+      public virtual IEnumerable<DeliveryToner>? DeliveryToners { get; set; }
       //public IEnumerable<TonerUsage> TonerUsages { get; set; }
-      public IEnumerable<PaperUsage> PaperUsages { get; set; }
-      public IEnumerable<ProfitCalculation> ProfitCalculations { get; set; }
+      public virtual IEnumerable<PaperUsage>? PaperUsages { get; set; }
+      public virtual IEnumerable<ProfitCalculation>? ProfitCalculations { get; set; }
 
    }
 }

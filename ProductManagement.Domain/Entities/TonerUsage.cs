@@ -60,6 +60,6 @@ namespace ProductManagement.Domain.Entities
 
       // Navigation property
       //public virtual Machine Machine { get; set; }
-      public virtual DeliveryToner DeliveryToner { get; set; }
+      public virtual DeliveryToner? DeliveryToner { get; set; }
    }
 }

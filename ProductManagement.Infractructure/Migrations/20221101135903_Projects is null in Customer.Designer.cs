@@ -12,8 +12,8 @@ using ProductManagement.DAL;
 namespace ProductManagement.DAL.Migrations
 {
     [DbContext(typeof(TonerContext))]
-    [Migration("20221101034324_Initial_Create")]
-    partial class Initial_Create
+    [Migration("20221101135903_Projects is null in Customer")]
+    partial class ProjectsisnullinCustomer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -390,13 +390,11 @@ namespace ProductManagement.DAL.Migrations
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Machine", b =>
                 {
-                    b.HasOne("ProductManagement.Domain.Entities.Project", "Project")
+                    b.HasOne("ProductManagement.Domain.Entities.Project", null)
                         .WithMany("Machines")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.PaperUsage", b =>

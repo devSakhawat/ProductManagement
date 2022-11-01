@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductManagement.DAL.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class AddVirtualForAllNavigationProperty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,9 +15,9 @@ namespace ProductManagement.DAL.Migrations
                 {
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: true),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),

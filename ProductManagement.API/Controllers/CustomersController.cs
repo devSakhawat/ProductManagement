@@ -95,7 +95,7 @@ namespace ProductManagement.API.Controllers
             context.CustomerRepository.Update(customer);
             await context.SaveChangesAsync();
 
-            return StatusCode(StatusCodes.Status204NoContent, MessageConstants.GenericError);
+            return Ok(customer);
 
          }
          catch (Exception)
@@ -125,15 +125,14 @@ namespace ProductManagement.API.Controllers
 
             customerInDb.IsDeleted = true;
 
-            context.CustomerRepository.Update(customerInDb);
+            context.CustomerRepository.Delete(customerInDb);
             await context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(customerInDb);
          }
          catch (Exception)
          {
-
-            throw;
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
       }
 

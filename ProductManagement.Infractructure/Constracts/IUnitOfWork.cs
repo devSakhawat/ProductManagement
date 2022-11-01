@@ -16,6 +16,6 @@ namespace ProductManagement.DAL.Constracts
 
       IMachineRepository MachineRepository { get; }
 
-      ITonerRepository tonerRepository { get; }
+      ITonerRepository TonerRepository { get; }
    }
 }
