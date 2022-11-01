@@ -13,7 +13,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await FirstOrDefaultAsync(p => p.ProjectId == id && p.IsDeleted == false);
+            return await FirstOrDefaultAsync(p => p.ProjectId == id && p.IsDeleted == false, m => m.Machines);
          }
          catch (Exception)
          {

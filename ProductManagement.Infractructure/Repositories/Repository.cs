@@ -101,11 +101,23 @@ namespace ProductManagement.DAL.Repositories
          }
       }
 
-      public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+      public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
       {
          try
          {
             return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+         }
+         catch (Exception)
+         {
+            throw;
+         }
+      }
+
+      public virtual async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, Expression<Func<T, object>> obj)
+      {
+         try
+         {
+            return await context.Set<T>().AsNoTracking().Include(obj).FirstOrDefaultAsync(predicate);
          }
          catch (Exception)
          {

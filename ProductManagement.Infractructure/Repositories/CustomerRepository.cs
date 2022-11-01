@@ -12,7 +12,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await FirstOrDefaultAsync(c => c.CustomerId == id && c.IsDeleted == false);
+            return await FirstOrDefaultAsync(c => c.CustomerId == id && c.IsDeleted == false , p => p.Projects);
          }
          catch (Exception)
          {
