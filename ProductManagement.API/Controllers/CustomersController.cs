@@ -8,12 +8,12 @@ namespace ProductManagement.API.Controllers
    //Country Controller
    [Route(RouteConstants.BaseRoute)]
    [ApiController]
-   public class CustomerController : ControllerBase
+   public class CustomersController : ControllerBase
    {
       private readonly IUnitOfWork context;
 
       // Default constructor
-      public CustomerController(IUnitOfWork context)
+      public CustomersController(IUnitOfWork context)
       {
          this.context = context;
       }
