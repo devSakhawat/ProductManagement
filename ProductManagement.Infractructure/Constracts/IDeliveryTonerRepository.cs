@@ -9,12 +9,12 @@ namespace ProductManagement.DAL.Constracts
 {
    public interface IDeliveryTonerRepository : IRepository<DeliveryToner>
    {
-      public Task<DeliveryToner> GetDeliveryTonerByKey(int key);
+      Task<DeliveryToner> GetDeliveryTonerByKey(int key);
 
       // to check that database contain current month delivery toner or not.
       // datetime will be splite for month and year only.
-      public int GetDeliveryTonerByCurrentMonth();
+      int GetDeliveryTonerByCurrentMonth();
 
-      public Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
+      Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
    }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using ProductManagement.DAL.Constracts;
 using ProductManagement.Domain.Entities;
 using System;
@@ -36,6 +37,8 @@ namespace ProductManagement.DAL.Repositories
             //var shortDateString = Convert.ToDateTime(lastDeliveryDate).ToShortDateString().Replace("-", string.Empty); ;
             //var checkCurrentMonthTonerDelivery = shortDateString.Substring(2, shortDateString.Length - 2);
 
+
+
             var lastRecordCreateDate = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Where(dl => dl.IsDeleted == false).Select(dl => dl.DateCreated).FirstOrDefault();
             var month = Convert.ToDateTime(lastRecordCreateDate).Month;
 
@@ -51,6 +54,13 @@ namespace ProductManagement.DAL.Repositories
 
       public async Task<IEnumerable<DeliveryToner>> GetDeliveryToners()
       {
+
+
+         var tryFromOne = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Take(2).Include(dl => dl.Machine).ToList();
+         var preDelToner = Convert.ToInt16(tryFromOne.Skip(1).Select(dl => dl.BW));
+         var curDelToner = Convert.ToInt16(tryFromOne.FirstOrDefault().BW);
+
+
          try
          {
             return await QueryAsync(dl => dl.IsDeleted == false, tu => tu.TonerUsages);

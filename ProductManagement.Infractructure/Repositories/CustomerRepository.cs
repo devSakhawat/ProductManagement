@@ -8,6 +8,7 @@ namespace ProductManagement.DAL.Repositories
       public CustomerRepository(TonerContext context) : base(context)
       {
       }
+
       public async Task<Customer> GetCustomerByKey(int id)
       {
          try

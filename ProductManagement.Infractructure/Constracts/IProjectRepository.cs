@@ -10,12 +10,12 @@ namespace ProductManagement.DAL.Constracts
    public interface IProjectRepository : IRepository<Project>
    {
       //Returns a project if key matched.
-      public Task<Project> GetProjectByKey(int id);
+      Task<Project> GetProjectByKey(int id);
 
       // Returns a project if the name matched.
-      public Task<Project> GetProjectByProjectName(string customerName);
+      Task<Project> GetProjectByProjectName(string customerName);
 
       // Returns all project.
-      public Task<IEnumerable<Project>> GetProjects();
+      Task<IEnumerable<Project>> GetProjects();
    }
 }
