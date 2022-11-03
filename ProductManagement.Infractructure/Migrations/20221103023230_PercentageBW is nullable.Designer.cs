@@ -12,8 +12,8 @@ using ProductManagement.DAL;
 namespace ProductManagement.DAL.Migrations
 {
     [DbContext(typeof(TonerContext))]
-    [Migration("20221101134545_AddVirtualForAllNavigationProperty")]
-    partial class AddVirtualForAllNavigationProperty
+    [Migration("20221103023230_PercentageBW is nullable")]
+    partial class PercentageBWisnullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,7 @@ namespace ProductManagement.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -40,6 +41,7 @@ namespace ProductManagement.DAL.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("CustomerName")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -56,6 +58,7 @@ namespace ProductManagement.DAL.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
@@ -73,6 +76,9 @@ namespace ProductManagement.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryTonerId"), 1L, 1);
 
                     b.Property<double?>("BW")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Black")
                         .HasColumnType("float");
 
                     b.Property<double?>("ColourTotal")
@@ -343,8 +349,8 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<int>("DeliveryTonerId")
                         .HasColumnType("int");
 
-                    b.Property<double>("InMachineToner")
-                        .HasColumnType("float");
+                    b.Property<int>("InHouse")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -352,16 +358,37 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("MonthlyDeliveryToner")
+                    b.Property<int>("MonthlyDelivery")
                         .HasColumnType("int");
 
-                    b.Property<double>("MonthlyTonerStock")
+                    b.Property<double>("MonthlyTotalToner")
                         .HasColumnType("float");
 
                     b.Property<double>("MonthlyUsedToner")
                         .HasColumnType("float");
 
-                    b.Property<double>("TonnerPercentage")
+                    b.Property<double?>("PercentageBW")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PercentageBlack")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PercentageCyan")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PercentageMagenta")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PercentageYellow")
+                        .IsRequired()
+                        .HasColumnType("float");
+
+                    b.Property<double?>("TotalColurParcentage")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double>("TotalToner")

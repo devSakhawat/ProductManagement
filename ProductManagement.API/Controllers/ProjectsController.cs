@@ -116,7 +116,7 @@ namespace ProductManagement.API.Controllers
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
             if (project.Machines.Where(m => m.IsDeleted == false).ToList().Count() > 0)
-               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DuplicateError);
+               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
 
             project.IsDeleted = false;
             context.ProjectRepository.Delete(project);

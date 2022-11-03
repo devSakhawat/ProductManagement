@@ -121,7 +121,7 @@ namespace ProductManagement.API.Controllers
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
             if (customerInDb.Projects.Where(p => p.IsDeleted == false).ToList().Count() > 0)
-               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DuplicateError);
+               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
 
             customerInDb.IsDeleted = true;
 

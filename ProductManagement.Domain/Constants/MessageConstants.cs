@@ -18,6 +18,7 @@ namespace ProductManagement.Domain.Constants
       public const string ConfirmedPasswordNotMatchedError = "Confirmed password did not matched!";
       public const string DuplicateUserAccountError = "The email address is associated with another user account!";
       public const string DuplicateError = "Duplicate data found!";
+      public const string DependencyError = "This record cannot be deleted. It is already in use.";
       public const string NoMatchFoundError = "No match found!";
       public const string InvalidParameterError = "Invalid parameter(s)!";
       public const string UnauthorizedAttemptOfRecordUpdateError = "Unauthorized attempt of updating record!";
@@ -26,7 +27,12 @@ namespace ProductManagement.Domain.Constants
       public const string IfNotSelected = "Choose an option!";
       public const string IfNotEmailAddress = "Email is not correct formation!";
       public const string IfNotCountryCode = "Invalid counrty code!";
+      public const string IfFutureDateSelected = "Please select valid date. Your can't select future date!";
 
-      public const string IfFutureDateSelected = "You can't select future date.Please Select Valid Date";
+      public const string RecordSaved = "Record successfully saved";
+      public const string RecordDeleted = "Record successfully deleted";
+      public const string IfDeleteReffereceRecord = "Foreign key refference in other table";
+      public const string IfInvalidUserPassword = "Invalid Username or password";
+      public const string RecordUpdated = "Record updated successfully";
    }
 }

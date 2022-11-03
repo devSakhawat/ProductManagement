@@ -54,14 +54,84 @@ namespace ProductManagement.API.Controllers
          }
          catch (Exception)
          {
-
-            throw;
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
       }
-      // URL: toner-api/machine/key/{key}
-      // Object to be saved in the table as a row.
+      // URL: toner-api/toner/key/{key}
+      // return first match row data.
+      [HttpGet]
+      [Route(RouteConstants.ReadTonerByKey)]
+      public async Task<IActionResult> ReadTonerByKey(int key)
+      {
+         try
+         {
+            if(key <= 0)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.InvalidParameterError);
 
+            var toner = await context.TonerRepository.GetTonerByKey(key);
 
+            if (toner == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+
+            return Ok(toner);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
+      // URL: toner-api/toner/{key}
+      // Object to be update in the table as a row.
+      [HttpPut]
+      [Route(RouteConstants.UpdateToner)]
+      public async Task<IActionResult> UpdateToner(int key, Toner toner)
+      {
+         try
+         {
+            if (key != toner.TonarId)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.UnauthorizedAttemptOfRecordUpdateError);
+
+            if (await IsDuplicate(toner) == true)
+               return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
+
+            context.TonerRepository.Update(toner);
+            await context.SaveChangesAsync();
+
+            return Ok(toner);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
+      // URL: toner-api/toner/{key}
+      // Object to be deleted form table as row.
+      [HttpDelete]
+      [Route(RouteConstants.DeleteToner)]
+      public async Task<IActionResult> DeleteToner(int key)
+      {
+         try
+         {
+            if (key <= 0)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+
+            var toner = await context.TonerRepository.GetTonerByKey(key);
+
+            if (toner == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+
+            toner.IsDeleted = true;
+            return Ok(toner);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
+      // check duplicate value.
       private async Task<bool> IsDuplicate(Toner toner)
       {
          try

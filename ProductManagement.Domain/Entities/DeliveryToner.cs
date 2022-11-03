@@ -1,12 +1,5 @@
-﻿using ProductManagement.Domain.Constants;
-using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ProductManagement.Domain.Entities
 {
@@ -29,6 +22,9 @@ namespace ProductManagement.Domain.Entities
 
       // 
       public double? Yellow { get; set; }
+
+      // 
+      public double? Black { get; set; }
 
       // Last Month delivery toner (if machine is black : field will fillup with BW value)
       // if(machine is colour: field value will be fillup with colourTotal vlaue
