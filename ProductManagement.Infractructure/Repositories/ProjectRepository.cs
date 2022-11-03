@@ -25,7 +25,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await FirstOrDefaultAsync(p => p.ProjectName == projectName && p.IsDeleted == false);
+            return await FirstOrDefaultAsync(p => p.ProjectName.ToLower().Trim() == projectName.ToLower().Trim() && p.IsDeleted == false);
          }
          catch (Exception)
          {
@@ -37,7 +37,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await QueryAsync(p => p.IsDeleted == false);
+            return await QueryAsync(p => p.IsDeleted == false, m => m.Machines);
          }
          catch (Exception)
          {

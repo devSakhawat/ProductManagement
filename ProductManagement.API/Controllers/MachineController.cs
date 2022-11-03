@@ -119,6 +119,9 @@ namespace ProductManagement.API.Controllers
             if (machine == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
+            if (machine.Toners.Where(p => p.IsDeleted == false).ToList().Count() > 0)
+               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
+
             machine.IsDeleted = true;
 
             context.MachineRepository.Delete(machine);

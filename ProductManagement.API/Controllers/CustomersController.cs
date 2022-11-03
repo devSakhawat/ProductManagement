@@ -95,7 +95,7 @@ namespace ProductManagement.API.Controllers
             context.CustomerRepository.Update(customer);
             await context.SaveChangesAsync();
 
-            return StatusCode(StatusCodes.Status204NoContent, MessageConstants.GenericError);
+            return Ok(customer);
 
          }
          catch (Exception)
@@ -121,19 +121,18 @@ namespace ProductManagement.API.Controllers
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
             if (customerInDb.Projects.Where(p => p.IsDeleted == false).ToList().Count() > 0)
-               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DuplicateError);
+               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
 
             customerInDb.IsDeleted = true;
 
-            context.CustomerRepository.Update(customerInDb);
+            context.CustomerRepository.Delete(customerInDb);
             await context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(customerInDb);
          }
          catch (Exception)
          {
-
-            throw;
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
       }
 

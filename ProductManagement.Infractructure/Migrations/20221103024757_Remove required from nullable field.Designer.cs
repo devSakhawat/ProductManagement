@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductManagement.DAL;
 
@@ -11,9 +12,10 @@ using ProductManagement.DAL;
 namespace ProductManagement.DAL.Migrations
 {
     [DbContext(typeof(TonerContext))]
-    partial class TonerContextModelSnapshot : ModelSnapshot
+    [Migration("20221103024757_Remove required from nullable field")]
+    partial class Removerequiredfromnullablefield
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -337,6 +339,9 @@ namespace ProductManagement.DAL.Migrations
 
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
+
+                    b.Property<double?>("Cyan")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("smalldatetime");

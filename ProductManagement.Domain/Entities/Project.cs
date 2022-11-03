@@ -28,13 +28,13 @@ namespace ProductManagement.Domain.Entities
 
       // Foreign key. 
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
+      [ForeignKey("CustomerId")]
       public int CustomerId { get; set; }
 
-      // Navigation property
-      [ForeignKey("CustomerId")]
-      public virtual Customer Customer { get; set; }
+      //Navigation property      
+      public virtual Customer? Customer { get; set; }
 
       // List of Child
-      public virtual IEnumerable<Machine> Machines { get; set; }
+      public virtual IEnumerable<Machine>? Machines { get; set; }
    }
 }

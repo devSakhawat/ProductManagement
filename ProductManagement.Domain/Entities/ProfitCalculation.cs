@@ -32,6 +32,6 @@ namespace ProductManagement.Domain.Entities
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       public bool IsFrofitable { get; set; }
 
-      public virtual Machine Machine { get; set; }
+      public virtual Machine? Machine { get; set; }
    }
 }

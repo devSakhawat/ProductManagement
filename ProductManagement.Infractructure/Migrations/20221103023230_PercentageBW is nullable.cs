@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductManagement.DAL.Migrations
 {
-    public partial class Initial_Create : Migration
+    public partial class PercentageBWisnullable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,6 +92,7 @@ namespace ProductManagement.DAL.Migrations
                     Cyan = table.Column<double>(type: "float", nullable: true),
                     Magenta = table.Column<double>(type: "float", nullable: true),
                     Yellow = table.Column<double>(type: "float", nullable: true),
+                    Black = table.Column<double>(type: "float", nullable: true),
                     ColourTotal = table.Column<double>(type: "float", nullable: true),
                     MachineId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -198,10 +199,15 @@ namespace ProductManagement.DAL.Migrations
                     TonerUsageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DeliveryTonerId = table.Column<int>(type: "int", nullable: false),
-                    TonnerPercentage = table.Column<double>(type: "float", nullable: false),
-                    InMachineToner = table.Column<double>(type: "float", nullable: false),
-                    MonthlyDeliveryToner = table.Column<int>(type: "int", nullable: false),
-                    MonthlyTonerStock = table.Column<double>(type: "float", nullable: false),
+                    PercentageBW = table.Column<double>(type: "float", nullable: true),
+                    PercentageCyan = table.Column<double>(type: "float", nullable: false),
+                    PercentageMagenta = table.Column<double>(type: "float", nullable: false),
+                    PercentageYellow = table.Column<double>(type: "float", nullable: false),
+                    PercentageBlack = table.Column<double>(type: "float", nullable: false),
+                    TotalColurParcentage = table.Column<double>(type: "float", nullable: false),
+                    MonthlyDelivery = table.Column<int>(type: "int", nullable: false),
+                    InHouse = table.Column<int>(type: "int", nullable: false),
+                    MonthlyTotalToner = table.Column<double>(type: "float", nullable: false),
                     MonthlyUsedToner = table.Column<double>(type: "float", nullable: false),
                     TotalToner = table.Column<double>(type: "float", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),

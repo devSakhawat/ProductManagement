@@ -75,8 +75,34 @@ namespace ProductManagement.DAL.Repositories
             return TonerRepository;
          }
       }
+      #endregion
 
-      ITonerRepository IUnitOfWork.tonerRepository => throw new NotImplementedException();
+      #region DeliveryToner
+      private IDeliveryTonerRepository deliveryTonerRepository;
+      public IDeliveryTonerRepository DeliveryTonerRepository
+      {
+         get 
+         {
+            if(deliveryTonerRepository == null)
+               deliveryTonerRepository = new DeliveryTonerRepository(context);
+
+            return deliveryTonerRepository;
+         }
+      }
+      #endregion
+
+      #region TonerUsage
+      private ITonerUsageRepository tonerUsageRepository;
+      public ITonerUsageRepository TonerUsageRepository
+      {
+         get 
+         {
+            if(tonerUsageRepository == null)
+               tonerUsageRepository = new TonerUsageRepository(context);
+
+            return TonerUsageRepository;
+         }
+      }
       #endregion
    }
 }

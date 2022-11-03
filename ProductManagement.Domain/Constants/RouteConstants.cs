@@ -46,5 +46,21 @@ namespace ProductManagement.Domain.Constants
       public const string DeleteToner = "toner/{key}";
       #endregion
 
+      #region DeliveryToner
+      public const string CreateDeliveryToner = "delivery-toner";
+      public const string ReadDeliveryToner = "delivery-toners";
+      public const string ReadDeliveryTonerByKey = "delivery-toner/key/{key}";
+      public const string UpdateDeliveryToner = "delivery-toner/{key}";
+      public const string DeleteDeliveryToner = "delivery-toner/{key}";
+      #endregion
+
+      #region TonerUsage
+      public const string CreateTonerUsage = "toner-usage";
+      public const string ReadTonerUsage = "toner-usages";
+      public const string ReadTonerUsageByKey = "toner-usage/key/{key}";
+      public const string UpdateTonerUsage = "toner-usage/{key}";
+      public const string DeleteTonerUsage = "toner-usage/{key}";
+      #endregion
+
    }
 }

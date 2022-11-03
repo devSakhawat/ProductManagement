@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductManagement.DAL;
 
@@ -11,9 +12,10 @@ using ProductManagement.DAL;
 namespace ProductManagement.DAL.Migrations
 {
     [DbContext(typeof(TonerContext))]
-    partial class TonerContextModelSnapshot : ModelSnapshot
+    [Migration("20221103023230_PercentageBW is nullable")]
+    partial class PercentageBWisnullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -366,21 +368,27 @@ namespace ProductManagement.DAL.Migrations
                         .HasColumnType("float");
 
                     b.Property<double?>("PercentageBW")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("PercentageBlack")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("PercentageCyan")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("PercentageMagenta")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("PercentageYellow")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("TotalColurParcentage")
+                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double>("TotalToner")

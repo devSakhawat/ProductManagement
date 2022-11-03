@@ -45,7 +45,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return context.Set<T>().Find();
+            return context.Set<T>().Find(id);
          }
          catch (Exception)
          {

@@ -8,67 +8,72 @@ namespace ProductManagement.API.Controllers
 {
    [Route(RouteConstants.BaseRoute)]
    [ApiController]
-   public class ProjectsController : ControllerBase
+   public class TonerController : ControllerBase
    {
       private readonly IUnitOfWork context;
-      public ProjectsController(IUnitOfWork context)
+      public TonerController(IUnitOfWork context)
       {
          this.context = context;
       }
 
+      // URL: toner-api/toner
       // Object to be saved in the table as a row.
       [HttpPost]
-      [Route(RouteConstants.CreateProject)]
-      public async Task<IActionResult> CreateProject(Project project)
+      [Route(RouteConstants.CreateToner)]
+      public async Task<IActionResult> CreateToner(Toner toner)
       {
          try
          {
-            if (await IsDuplicate(project) == true)
+            if (await IsDuplicate(toner) == true)
                return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
 
-            context.ProjectRepository.Add(project);
+            context.TonerRepository.Add(toner);
             await context.SaveChangesAsync();
-            return CreatedAtAction("ReadProjectByKey", new { key = project.ProjectId }, project);
+
+            return CreatedAtAction("ReadTonerByKey", new { key = toner.TonarId}, toner);
          }
          catch (Exception)
          {
             return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
       }
-
-      // return all project.
-      [HttpGet]
-      [Route(RouteConstants.ReadProjects)]
-      public async Task<IActionResult> ReadProjects()
+      // URL: toner-api/toners
+      // return all toners.
+      [HttpPost]
+      [Route(RouteConstants.ReadToner)]
+      public async Task<IActionResult> ReadToner()
       {
          try
          {
-            var projects = await context.ProjectRepository.GetProjects();
-            return Ok(projects);
+            var toners =await context.TonerRepository.GetToners();
+
+            if (toners == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+            
+            return Ok(toners);
          }
          catch (Exception)
          {
             return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
-
       }
-
-      // return match first row data.
+      // URL: toner-api/toner/key/{key}
+      // return first match row data.
       [HttpGet]
-      [Route(RouteConstants.ReadProjectByKey)]
-      public async Task<IActionResult> ReadProjectByKey(int key)
+      [Route(RouteConstants.ReadTonerByKey)]
+      public async Task<IActionResult> ReadTonerByKey(int key)
       {
          try
          {
-            if (key <= 0)
-               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+            if(key <= 0)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.InvalidParameterError);
 
-            var project = await context.ProjectRepository.GetProjectByKey(key);
+            var toner = await context.TonerRepository.GetTonerByKey(key);
 
-            if (project == null)
+            if (toner == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
-            return Ok(project);
+            return Ok(toner);
          }
          catch (Exception)
          {
@@ -76,23 +81,24 @@ namespace ProductManagement.API.Controllers
          }
       }
 
-      // Object to be updated in the table as a row.
+      // URL: toner-api/toner/{key}
+      // Object to be update in the table as a row.
       [HttpPut]
-      [Route(RouteConstants.UpdateProject)]
-      public async Task<IActionResult> UpdateProject(int key, Project project)
+      [Route(RouteConstants.UpdateToner)]
+      public async Task<IActionResult> UpdateToner(int key, Toner toner)
       {
          try
          {
-            if (key != project.ProjectId)
+            if (key != toner.TonarId)
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.UnauthorizedAttemptOfRecordUpdateError);
 
-            if (await IsDuplicate(project) == true)
+            if (await IsDuplicate(toner) == true)
                return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
 
-            context.ProjectRepository.Update(project);
+            context.TonerRepository.Update(toner);
             await context.SaveChangesAsync();
 
-            return Ok(project);
+            return Ok(toner);
          }
          catch (Exception)
          {
@@ -100,29 +106,24 @@ namespace ProductManagement.API.Controllers
          }
       }
 
-      // Object to be remove from table.
+      // URL: toner-api/toner/{key}
+      // Object to be deleted form table as row.
       [HttpDelete]
-      [Route(RouteConstants.DeleteProject)]
-      public async Task<IActionResult> DeleteProject(int key)
+      [Route(RouteConstants.DeleteToner)]
+      public async Task<IActionResult> DeleteToner(int key)
       {
          try
          {
             if (key <= 0)
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
 
-            var project = await context.ProjectRepository.GetProjectByKey(key);
+            var toner = await context.TonerRepository.GetTonerByKey(key);
 
-            if (project == null)
+            if (toner == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
-            if (project.Machines.Where(m => m.IsDeleted == false).ToList().Count() > 0)
-               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
-
-            project.IsDeleted = false;
-            context.ProjectRepository.Delete(project);
-            await context.SaveChangesAsync();
-
-            return Ok(project);
+            toner.IsDeleted = true;
+            return Ok(toner);
          }
          catch (Exception)
          {
@@ -130,14 +131,14 @@ namespace ProductManagement.API.Controllers
          }
       }
 
-      // Duplicat value check
-      private async Task<bool> IsDuplicate(Project project)
+      // check duplicate value.
+      private async Task<bool> IsDuplicate(Toner toner)
       {
          try
          {
-            var projectInDb = await context.ProjectRepository.GetProjectByProjectName(project.ProjectName);
+            var tonerInDb = await context.TonerRepository.GetTonerBySerialNo(toner.SerialNo);
 
-            if (projectInDb != null)
+            if (tonerInDb != null)
                return true;
 
             return false;
