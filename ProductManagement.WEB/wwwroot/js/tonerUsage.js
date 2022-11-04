@@ -36,7 +36,6 @@ function getProject(e) {
       contentType: "application/json",
       data: { key: CustomerId },
       success: function (res) {
-         console.log(res);
          $("#ProjectId").append($("<option>").text("Select Project").attr({ "value": "" }));
          $.each(res, function (index, v) {
             $("#ProjectId").append($("<option>").text(v.projectName).attr({"value" : v.projectId}));
@@ -45,6 +44,41 @@ function getProject(e) {
    });
 };
 
-function addTonerPercentage() {
-   
+var tonerUse=[];
+
+function getMachine(e) {
+   var ProjectId = e.target.value;
+   $("#MachineId option").remove();
+
+   $.ajax({
+      url: BaseApi + "machine/projects/" + ProjectId,
+      type: "GET",
+      dataType: "json",
+      contextType: "application/json",
+      data: { key: ProjectId },
+      success: function (res) {
+         console.log(res);
+         tonerUse.push(res);
+         $("#MachineId").append($("<option>").text("Select Machine").attr({ "value": "" }));
+         $.each(res, function (index, v) {
+            $("#MachineId").append($("<option>").text(v.machineModel).attr({ "value": v.colourType}));
+         });
+      }
+   });
+}
+
+
+function getToner(e) {
+   var colourType = e.target.value;
+   console.log(tonerUse);
+   console.log(colourType);
+   console.log(typeof (colourType));
+
+   if (parseInt(colourType) == 0) {
+
+   }
+
+   if (parseInt(colourType) == 1) {
+
+   }
 }

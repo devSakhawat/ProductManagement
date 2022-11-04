@@ -27,6 +27,18 @@ namespace ProductManagement.DAL.Repositories
          }
       }
 
+      public async Task<IEnumerable<Machine>> GetMachinByProjectId(int key)
+      {
+         try
+         {
+            return await QueryAsync(m => m.ProjectId == key && m.IsDeleted == false);
+         }
+         catch (Exception)
+         {
+            throw;
+         }
+      }
+
       public async Task<Machine> GetMachinByMahcineName(string machineSN)
       {
          try

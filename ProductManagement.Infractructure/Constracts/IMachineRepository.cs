@@ -11,6 +11,8 @@ namespace ProductManagement.DAL.Constracts
    {
       Task<Machine> GetMachinByKey(int key);
 
+      Task<IEnumerable<Machine>> GetMachinByProjectId(int key);
+
       Task<Machine> GetMachinByMahcineName(string machineSN);
 
       Task<IEnumerable<Machine>> GetMachines();

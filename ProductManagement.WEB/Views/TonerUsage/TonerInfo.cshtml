@@ -122,21 +122,32 @@
                         </tr>*@
 
                         <tr id="tonerPercentage">
-                           <th width="25%">
+                           <td width="25%">
                               <input class="form-control" placeholder="Cyan" autocomplete="off" id="txt_C" />
-                           </th>
-                           <th width="25%">
+                           </td>
+                           <td width="25%">
                               <input class="form-control" placeholder="Magenta" autocomplete="off" id="txt_M" />
-                           </th>
-                           <th width="25%">
+                           </td>
+                           <td width="25%">
                               <input class="form-control" placeholder="Yellow" autocomplete="off" id="txt_Y" />
-                           </th>
-                           <th width="25%">
+                           </td>
+                           <td width="25%">
                               <input class="form-control" placeholder="Black" autocomplete="off" id="txt_K" />
-                           </th>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Present Counter" autocomplete="off" id="txt_C" />
+                           </td>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Current Counter" autocomplete="off" id="txt_M" />
+                           </td>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Total Counter" autocomplete="off" id="txt_Y" />
+                           </td>
                         </tr>
 
-                        <tr>
+                        @*<tr>
                            <td colspan="4">
                               <div style="margin:0 auto; width:40%">
 
@@ -154,10 +165,33 @@
                               </div>
 
                            </td>
-                        </tr>
+                        </tr>*@
+
                      </thead>
                      <tbody id="loadcategory">
                      </tbody>
+                  </table>
+                  <table class="table table-bordered mt-3" id="dynamicAddRemove">
+                     <tr>
+                        <th class="wd-15p">Machine SN</th>
+                        <th class="wd-15p">Item Purchase</th>
+                        <th class="wd-15p">Item Sell</th>
+                        <th class="wd-15p">Item Discount</th>
+                        <th class="wd-15p">Item Total</th>
+                        <th class="wd-15p">Item Profite</th>
+                        <th class="wd-10p td2 wd-100p">
+                        </th>
+                     </tr>
+                     <tfoot>
+                        <tr>
+                           <td class="text-right">Grand Total </td>
+                           <td class="PurchaseSubTotal" id="purchaseSubTotal" value=" 0.00"></td>
+                           <td class="SellSubTotal" id="sellSubTotal"></td>
+                           <td class="DiscountSubTotal" id="discountSubTotal"></td>
+                           <td class="SubTotal" id="subTotal"></td>
+                           <td class="SubProfite" id="subProfite"></td>
+                        </tr>
+                     </tfoot>
                   </table>
                </div>
             </div>
