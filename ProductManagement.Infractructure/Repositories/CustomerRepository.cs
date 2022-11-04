@@ -37,7 +37,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await QueryAsync(c => c.IsDeleted == false, p => p.Projects);
+            return await QueryAsync(c => c.IsDeleted == false);
          }
          catch (Exception)
          {

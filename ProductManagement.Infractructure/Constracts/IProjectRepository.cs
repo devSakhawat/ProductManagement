@@ -12,6 +12,8 @@ namespace ProductManagement.DAL.Constracts
       //Returns a project if key matched.
       Task<Project> GetProjectByKey(int id);
 
+      Task<IEnumerable<Project>> GetProjectByCustomerId(int id);
+
       // Returns a project if the name matched.
       Task<Project> GetProjectByProjectName(string customerName);
 

@@ -23,6 +23,7 @@ namespace ProductManagement.Domain.Constants
       public const string CreateProject = "project";
       public const string ReadProjects = "projects";
       public const string ReadProjectByKey = "project/key/{key}";
+      public const string ReadProjectByCustomerId = "project/customers/{key}";
       public const string ReadProjectByProjectName = "project/{projectName}";
       public const string UpdateProject = "project/{key}";
       public const string DeleteProject = "project/{key}";

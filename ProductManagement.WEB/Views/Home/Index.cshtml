@@ -3,7 +3,128 @@
    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+   <div class="content-overlay"></div>
+   <div class="header-navbar-shadow"></div>
+   <div class="content-wrapper container-xxl p-0">
+      <div class="content-header row">
+         <div class="content-header-left col-md-9 col-12 mb-2">
+            <div class="row breadcrumbs-top">
+               <div class="col-12">
+                  <div class="breadcrumb-wrapper">
+                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                           <a href="#">Configure</a>
+                        </li>
+
+                        <li class="breadcrumb-item active"> Quick list </li>
+                     </ol>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+      <div class="content-body">
+         <!-- Validation -->
+         <section class="bs-validation">
+            <div class="row">
+               <div class="col-7">
+                  <div class="row" id="basic-table">
+                     <div class="col-12">
+                        <div class="card">
+                           <div class="card-header">
+                              <h4 class="card-title">Quick list Page</h4>
+                           </div>
+                           <div class="table-responsive">
+                              <table class="table">
+                                 <thead>
+                                    <tr>
+                                       <th>Sl</th>
+                                       <th>Quick list category</th>
+                                       <th>Sub-sub category</th>
+                                       <th>Description</th>
+                                       <th>ACTIONS</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                   @* @foreach (var item in Model.Listpanal)
+                                    {
+                                       <tr>
+                                          <td>
+                                             @Html.DisplayFor(modelItem => item.Quickstartid)
+                                          </td>
+                                          <td>
+                                             @Html.DisplayFor(modelItem => item.QuickcatagoryName)
+                                          </td>
+                                          <td>
+                                             @Html.DisplayFor(modelItem => item.Subsubcategoryname)
+                                          </td>
+                                          <td>
+                                             @Html.DisplayFor(modelItem => item.Description)
+                                          </td>
+                                          <td>
+                                             <a class="btn-info btn waves-effect waves-float waves-light" title="Edit" asp-action="EditQuickList" asp-controller="Configuration" action="GET" asp-route-id="@item.Quickstartid">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 me-50"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+
+                                             </a>
+                                             <a class="btn-danger btn waves-effect waves-float waves-light" title="Delete" asp-action="DeleteQuickList" asp-controller="Configuration" asp-route-id="@item.Quickstartid">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash me-50"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                             </a>
+                                          </td>
+                                       </tr>
+                                    }*@
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- jQuery Validation -->
+               <div class="col-md-5 col-12">
+                  <div class="card">
+                     <div class="card-header">
+                        @*<h4 class="card-title">Category Create</h4>*@
+                     </div>
+                     <div class="card-body">
+                        <form id="jquery-val-form" method="post">
+                           <div class="mb-1">
+                              @*<input type="hidden" asp-for="Updatepanal.Quickstartid" />*@
+                              <input type="hidden"  />
+                              <label class="form-label" for="category_Id">Quick list category</label>
+                              <select class="form-select" id="basicSelect">
+                              </select>
+                              
+                              @*<select class="form-select" id="basicSelect" asp-for="Updatepanal.Quickcatid" asp-items="@(new SelectList(Model.QuickCat, "Quickcatid", "QuickcatagoryName"))">
+                              </select>*@
+                           </div>
+
+                           <div class="mb-1">
+                              <label class="form-label" for="category_Id">Sub-sub category</label>
+                              <select class="form-select" id="basicSelect">
+                              </select>
+                              @*<select class="form-select" id="basicSelect" asp-for="Updatepanal.Subsubcatid" asp-items="@(new SelectList(Model.SubsubCat, "Subsubcatid", "Subsubcategoryname"))">
+                              </select>*@
+                           </div>
+
+                           <div class="mb-1">
+                              <label class="form-label" for="description">Description</label>
+                              <input type="text" class="form-control" id="description" placeholder="Description" autocomplete="off" />
+                              @*<input type="text" class="form-control" asp-for="Updatepanal.Description" id="description" placeholder="Description" autocomplete="off" />*@
+                           </div>
+
+                           <button type="submit" class="btn btn-primary" asp-action="AddQuickList" asp-controller="Configuration" action="POST">Submit</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+               <!-- /jQuery Validation -->
+            </div>
+         </section>
+         <!-- /Validation -->
+      </div>
+   </div>
 </div>
+<!-- END: Content-->
