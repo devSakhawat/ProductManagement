@@ -40,8 +40,8 @@ namespace ProductManagement.API.Controllers
       // URL: toner-api/toners
       // return all toners.
       [HttpPost]
-      [Route(RouteConstants.ReadToner)]
-      public async Task<IActionResult> ReadToner()
+      [Route(RouteConstants.ReadToners)]
+      public async Task<IActionResult> ReadToners()
       {
          try
          {

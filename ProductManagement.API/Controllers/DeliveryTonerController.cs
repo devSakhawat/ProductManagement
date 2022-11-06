@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductManagement.DAL.Constracts;
 using ProductManagement.Domain.Constants;
+using ProductManagement.Domain.Dtos;
 using ProductManagement.Domain.Entities;
+using System.Reflection.PortableExecutable;
 
 namespace ProductManagement.API.Controllers
 {
@@ -66,8 +68,8 @@ namespace ProductManagement.API.Controllers
       // URL: toner-api/delivery-toners
       // All delivery toner data.
       [HttpGet]
-      [Route(RouteConstants.ReadDeliveryToner)]
-      public async Task<IActionResult> ReadDeliveryToner()
+      [Route(RouteConstants.ReadDeliveryToners)]
+      public async Task<IActionResult> ReadDeliveryToners()
       {
          try
          {
@@ -101,6 +103,79 @@ namespace ProductManagement.API.Controllers
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
             return Ok(deliveryToner);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
+      // URL: toner-api/delivery-toner/machine/{machineId}
+      // last delivary toner month value
+      [HttpGet]
+      [Route(RouteConstants.ReadDeliveryTonerByMachine)]
+      public async Task<IActionResult> ReadDeliveryTonerByMachineId(DateTime deliveryDate)
+      {
+         try
+         {
+            if (deliveryDate >= DateTime.Now)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+
+            var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByDeliveryDate();
+            
+
+            if (deliveryToner == null)
+            {
+               var deliveryTonerDto = new DeliveryTonerDto
+               {
+                  CurrentMonth = 0
+               };
+               return Ok(deliveryTonerDto);
+            }
+            else
+            {
+               var currentMonth = Convert.ToDateTime(deliveryToner.DateCreated).Month;
+               if (deliveryToner.Machine.ColourType == ColourType.BW)
+               {
+                  var deliveryTonerDto = new DeliveryTonerDto
+                  {
+                     DeliveryTonerId = deliveryToner.DeliveryTonerId,
+                     BW = deliveryToner.BW,
+                     MachineId = deliveryToner.MachineId,
+                     DateCreated = deliveryToner.DateCreated,
+                     CreatedBy = deliveryToner.CreatedBy,
+
+                     ColourType = deliveryToner.Machine.ColourType,
+                     MachineSN = deliveryToner.Machine.MachineSN,
+                     CurrentMonth = currentMonth
+                  };
+                  return Ok(deliveryTonerDto);
+               }
+               else if (deliveryToner.Machine.ColourType == ColourType.Colour)
+               {
+                  var deliveryTonerDto = new DeliveryTonerDto
+                  {
+                     DeliveryTonerId = deliveryToner.DeliveryTonerId,
+                     Cyan = deliveryToner.Cyan,
+                     Magenta = deliveryToner.Magenta,
+                     Yellow = deliveryToner.Yellow,
+                     Black = deliveryToner.Black,
+                     ColourTotal = deliveryToner.ColourTotal,
+                     MachineId = deliveryToner.MachineId,
+                     DateCreated = deliveryToner.DateCreated,
+                     CreatedBy = deliveryToner.CreatedBy,
+
+                     ColourType = deliveryToner.Machine.ColourType,
+                     MachineSN = deliveryToner.Machine.MachineSN,
+                     CurrentMonth = currentMonth
+                  };
+                  return Ok(deliveryTonerDto);
+               }
+               else
+               {
+                  return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+               }
+            }
          }
          catch (Exception)
          {

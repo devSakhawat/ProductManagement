@@ -1,9 +1,5 @@
-﻿using ProductManagement.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductManagement.Domain.Dtos;
+using ProductManagement.Domain.Entities;
 
 namespace ProductManagement.DAL.Constracts
 {
@@ -13,7 +9,7 @@ namespace ProductManagement.DAL.Constracts
 
       // to check that database contain current month delivery toner or not.
       // datetime will be splite for month and year only.
-      int GetDeliveryTonerByCurrentMonth();
+      Task<IEnumerable<DeliveryTonerDto>> GetDeliveryTonerByDeliveryDate();
 
       Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
    }

@@ -8,90 +8,15 @@
 <div class="app-content content">
    @*<div class="content-overlay"></div>
    <div class="header-navbar-shadow"></div>*@
-   <div class="content-wrapper container-xxl p-0">
-      <!--Breadcrumb-->
-      <div class="content-header row">
-         <div class="content-header-left col-md-9 col-12 mb-2">
-            <div class="row breadcrumbs-top">
-               <div class="col-12">
-                  <h2 class="content-header-title float-start mb-0">Configuration</h2>
-                  <div class="breadcrumb-wrapper">
-                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                           <a href="#">Configuration</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                           <a href="#">Categories </a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                           Category
-                        </li>
-                     </ol>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
-            <div class="mb-1 breadcrumb-right">
-               <div class="dropdown">
-                  <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle waves-effect waves-float waves-light" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button>
-                  <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square me-1"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square me-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail me-1"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar me-1"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span class="align-middle">Calendar</span></a></div>
-               </div>
-            </div>
-         </div>
-      </div>
-
+   <div class="content-wrapper">
       <div class="content-body">
-@*         <ul class="nav nav-pills mb-2">
-            <!-- categories -->
-            <li class="nav-item">
-               <a class="nav-link active" href="/Configuration/Category">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user font-medium-3 me-50"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                  <span class="fw-bold">Categories</span>
-               </a>
-            </li>
-
-            <!-- quicklist -->
-            <li class="nav-item">
-               <a class="nav-link" href="/Configuration/QuickList">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock font-medium-3 me-50"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  <span class="fw-bold">Quicklist</span>
-               </a>
-            </li>
-
-            <!-- department -->
-            <li class="nav-item">
-               <a class="nav-link" href="/Configuration/Department">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark font-medium-3 me-50"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                  <span class="fw-bold">Department</span>
-               </a>
-            </li>
-
-            <!-- country -->
-            <li class="nav-item">
-               <a class="nav-link" href="/Configuration/Country">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell font-medium-3 me-50"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                  <span class="fw-bold">Country</span>
-               </a>
-            </li>
-
-            <!-- urgency -->
-            <li class="nav-item">
-               <a class="nav-link" href="/Configuration/Urgency">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link font-medium-3 me-50"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                  <span class="fw-bold">Urgency</span>
-               </a>
-            </li>
-         </ul>
-         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/autofill/2.4.0/css/autoFill.dataTables.min.css">
-         *@
          <div class="card">
             <div class="card-header">
                <h4 class="card-title">Toner Usage Calculation Page</h4><hr />
             </div>
             <div class="card-body">
-               <div class="table-responsive">
-                  <table class="table bg-light-secondary" id="tblTonerInfo">
+               <div class="table-responsive" id="TonerUsageForm">
+                  <table class="table bg-light-secondary">
                      <thead>
                         <tr>
                            <th width="25%">
@@ -109,17 +34,83 @@
                                  <option value="">Select Machine</option>
                               </select>
                            </th>
-                           <th width="25%"></th>
+                           <th width="25%"><button type="button" onclick="CalculateValues()" class="btn btn-primary waves-effect waves-float waves-light">Add One Info</button></th>
                         </tr>
+                     </thead>
+                     <thead id="TonerPercentage">
 
-                        @*<tr>
+                     </thead>
+                  </table>
+
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="33.33%">
+                              <input type="text" class="form-control prevCounter" placeholder="Previous Counter" autocomplete="off" id="PrevCounter" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control curtCounter" placeholder="Current Counter" autocomplete="off" id="CurtCounter" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control totalCounter" placeholder="Total Counter" autocomplete="off" id="TotalCounter" />
+                           </th>
+                        </tr>
+                     </thead>
+                  </table>
+
+                  <table class="table table-bordered mt-1" id="AddRemoveItem">
+                     <tr>
+                        <th class="wd-15p">Machine SN</th>
+                        <th class="wd-15p">InMachine Toner</th>
+                        <th class="wd-15p">Monthly Counter</th>
+                        <th class="wd-15p">Monthly Counter</th>
+                        <th class="wd-15p">Item Total</th>
+                        <th class="wd-15p">Item Profite</th>
+                        <th class="wd-10p td2 wd-100p"></th>
+                     </tr>
+                     <tfoot>
+                        <tr>
+                           <td class="wd-15p PrevBWToner" id="prevBWToner"><input type="text" class="form-control" placeholder="Previous BW Toner" /></td>
+                           <td class="wd-15p PrevColourToner" id="prevColourToner">Previous Colour Toner</td>
+                           <td class="wd-15p DeliBWToner" id="deliBWToner">Delivery BW Toner</td>
+                           <td class="wd-15p DeliColourToner" id="deliColourToner">Delivery Colour Toner</td>
+                           <td class="wd-15p InHouseTotalToner" id="inHouseTotalToner">InhouseToner</td>
+                           <td class="wd-15p MachineTotalToner" id="machineTotalToner">Machine Toner</td>
+                           <td class="wd-10p td2 wd-100p"></td>
+                        </tr>
+                     </tfoot>
+                  </table>
+
+
+                  @*<table class="table bg-light-secondary" id="tblTonerInfo">
+                     <thead>
+                        <tr>
+                           <th width="25%">
+                              <select class="form-control" id="CustomerId" onchange="getProject(event)">
+                                 <option value="">Select Customer</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="ProjectId" onchange="getMachine(event)">
+                                 <option value="">Select Project</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="MachineId" onchange="getToner(event)">
+                                 <option value="">Select Machine</option>
+                              </select>
+                           </th>
+                           <th width="25%"><button type="button" class="btn btn-primary waves-effect waves-float waves-light">Add One Info</button></th>
+                        </tr>
+                        
+                        <tr>
                            <td class="">
                               <div class="input-group txt-center">
                                  <span class="input-group-text" id="basic-addon3">Add Machine</span>
                                  <i onclick="addTonerPercentage()" class="AddMachine rounded-end" data-feather='plus'></i>
                               </div>
                            </td>
-                        </tr>*@
+                        </tr>
 
                         <tr id="tonerPercentage">
                            <td width="25%">
@@ -147,7 +138,7 @@
                            </td>
                         </tr>
 
-                        @*<tr>
+                        <tr>
                            <td colspan="4">
                               <div style="margin:0 auto; width:40%">
 
@@ -163,36 +154,106 @@
                                     <svg viewBox="0 4 20 18" width="22" height="14" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                  </button>
                               </div>
-
                            </td>
-                        </tr>*@
-
+                        </tr>
                      </thead>
                      <tbody id="loadcategory">
                      </tbody>
+                  </table>*@
+
+                  @*Select Customer Project Machine*@
+                  @*<table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="25%">
+                              <select class="form-control" id="CustomerId" onchange="getProject(event)">
+                                 <option value="">Select Customer</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="ProjectId" onchange="getMachine(event)">
+                                 <option value="">Select Project</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="MachineId" onchange="getToner(event)">
+                                 <option value="">Select Machine</option>
+                              </select>
+                           </th>
+                           <th width="25%"><button type="button" class="btn btn-primary waves-effect waves-float waves-light">Add One Info</button></th>
+                        </tr>
+                     </thead>
+                  </table>*@
+
+                  @*For black and white toner*@
+                  @*<table class="table bg-light-secondary">
+                     <thead>
+                        <tr id="tonerPercentage">
+                           <td>
+                              <input type="text" class="form-control" placeholder="Black N White" autocomplete="off" id="txt_C" />
+                           </td>
+                        </tr>
+                     </thead>
+                  </table>*@
+
+                  @*For colour toner*@
+                  @*<table class="table bg-light-secondary">
+                     <thead>
+                        <tr id="tonerPercentage">
+                           <td width="25%">
+                              <input class="form-control" placeholder="Cyan" autocomplete="off" id="txt_C" />
+                           </td>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Magenta" autocomplete="off" id="txt_M" />
+                           </td>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Yellow" autocomplete="off" id="txt_Y" />
+                           </td>
+                           <td width="25%">
+                              <input class="form-control" placeholder="Black" autocomplete="off" id="txt_K" />
+                           </td>
+                        </tr>
+                     </thead>
                   </table>
-                  <table class="table table-bordered mt-3" id="dynamicAddRemove">
+
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="33.33%">
+                              <input type="text" class="form-control" placeholder="Present Counter" autocomplete="off" id="txt_C" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control" placeholder="Current Counter" autocomplete="off" id="txt_M" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control" placeholder="Total Counter" autocomplete="off" id="txt_Y" />
+                           </th>
+                        </tr>
+                     </thead>
+                  </table>*@
+
+ @*                 <table class="table table-bordered mt-1" id="AddRemoveItem">
                      <tr>
                         <th class="wd-15p">Machine SN</th>
-                        <th class="wd-15p">Item Purchase</th>
-                        <th class="wd-15p">Item Sell</th>
-                        <th class="wd-15p">Item Discount</th>
+                        <th class="wd-15p">InMachine Toner</th>
+                        <th class="wd-15p">Monthly Counter</th>
+                        <th class="wd-15p">Monthly Counter</th>
                         <th class="wd-15p">Item Total</th>
                         <th class="wd-15p">Item Profite</th>
-                        <th class="wd-10p td2 wd-100p">
-                        </th>
+                        <th class="wd-10p td2 wd-100p"></th>
                      </tr>
                      <tfoot>
                         <tr>
-                           <td class="text-right">Grand Total </td>
-                           <td class="PurchaseSubTotal" id="purchaseSubTotal" value=" 0.00"></td>
-                           <td class="SellSubTotal" id="sellSubTotal"></td>
-                           <td class="DiscountSubTotal" id="discountSubTotal"></td>
-                           <td class="SubTotal" id="subTotal"></td>
-                           <td class="SubProfite" id="subProfite"></td>
+                           <td class="wd-15p PrevBWToner" id="prevBWToner"><input type="text" class="form-control" placeholder="Previous BW Toner" /></td>
+                           <td class="wd-15p PrevColourToner" id="prevColourToner">Previous Colour Toner</td>
+                           <td class="wd-15p DeliBWToner" id="deliBWToner">Delivery BW Toner</td>
+                           <td class="wd-15p DeliColourToner" id="deliColourToner">Delivery Colour Toner</td>
+                           <td class="wd-15p InHouseTotalToner" id="inHouseTotalToner">InhouseToner</td>
+                           <td class="wd-15p MachineTotalToner" id="machineTotalToner">Machine Toner</td>
+                           <td class="wd-10p td2 wd-100p"></td>
                         </tr>
                      </tfoot>
-                  </table>
+                  </table>*@
                </div>
             </div>
          </div>
