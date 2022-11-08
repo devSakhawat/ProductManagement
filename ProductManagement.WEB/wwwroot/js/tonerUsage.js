@@ -5,6 +5,8 @@
 var BaseApi = "https://localhost:7284/toner-api/";
 //================  Global Varialbe  ========================
 var currentDate = new Date();
+// store toner use data as container
+var tonerUse = [];
 
 
 function getCustomers() {
@@ -49,7 +51,7 @@ function getProject(e) {
    });
 };
 
-var tonerUse=[];
+
 
 function getMachine(e) {
    var ProjectId = e.target.value;
@@ -149,10 +151,12 @@ function CalculateValues() {
 
 
 
-//==============  =========================================
+//============== Delivery toner part =========================================
+//============== Delivery toner part =========================================
+//============== Delivery toner part =========================================
 
-// object variable for toner delivery
-var deliveryTonerObj = {};
+// object variable for get toner delivery data
+var deliveryTonerGetResult = {};
 
 function getMachineForDelivery(e) {
    var ProjectId = e.target.value;
@@ -165,7 +169,6 @@ function getMachineForDelivery(e) {
       contentType: "application/json",
       data: { key: ProjectId },
       success: function (res) {
-         tonerUse.push(res);
          $("#MachineId").append($("<option>").text("Select Machine").attr({ "value": "" }));
          $.each(res, function (index, v) {
             $("#MachineId").append($("<option>").text(v.machineSN).attr({ "value": v.machineId }));
@@ -179,14 +182,11 @@ function getMachineForDelivery(e) {
 
 //================  without data how pass perameter to api   ===========================
 // global varial for post
-var postColourType = {};
+/*var postColourType = {};*/
 
 function deliveryToner(e) {
    var machineId = e.target.value;
-/*   var currentMonth = new Date().getMonth() + 1;*/
-
    $.ajax({
-      //url: BaseApi + "delivery-toner/machine/" + machineId,
       url: BaseApi + "delivery-toner/machine/" + machineId,
       type : "GET",
       dataType: "json",
@@ -194,30 +194,30 @@ function deliveryToner(e) {
       success: function (res) {
          // insert result value to golobal variable
          deliveryTonerGetResult = res.find(obj => obj);
-
          var currentMonthNumber = currentDate.getMonth() + 1;
          var currentMonthString = currentDate.toLocaleString("default", { month: "long" });
 
-         var result = res.find(obj => obj);
+         //var result = res.find(obj => obj);
 
          // condition check for database contain current month data or not
-         if (currentMonthNumber == result.currentMonth) {
+         //if (currentMonthNumber == result.currentMonth) {
+         if (currentMonthNumber == deliveryTonerGetResult.currentMonth) {
             $("#DeliveryToner tr:eq(0)").remove();
 
             $("#DeliveryToner").append(
                `<tr id="deliveryTonerItem">
                   <td colspan=4">
                      <div class="alert alert-success" role="alert">
-                        You allready insert <b style="font-color: black">${currentMonthString}</b> month delivery toner for <b>${result.machineSN}</b>.
+                        You allready insert <b style="font-color: black">${currentMonthString}</b> month delivery toner for <b>${deliveryTonerGetResult.machineSN}</b>.
                      </div>
                   </td>
                </tr`
             );
          };
-         if (currentMonthNumber != result.currentMonth) {
+         if (currentMonthNumber != deliveryTonerGetResult.currentMonth) {
             $("#DeliveryToner tr:eq(0)").remove();
 
-            if (result.colourType == 0) {
+            if (deliveryTonerGetResult.colourType == 0) {
                $("#DeliveryToner").append(
                   `<tr id="deliveryTonerItem">
                      <td colspan=4">
@@ -252,7 +252,6 @@ function deliveryToner(e) {
 //================  post DeliveryToner  ====================
 // reset input filed
 
-
 function ResetInput() {
    $("#toner_C").val(0);
    $("#toner_M").val(0);
@@ -262,24 +261,26 @@ function ResetInput() {
 }
 
 var ItemContainer = [];
-var Item = {};
 var i = 1;
 function CalculateAddItemContainer() {
    if (deliveryTonerGetResult.colourType == 0) {
-      Item = {
-         MachineId: deliveryTonerGetResult.machineId,
-         MachineSN: deliveryTonerGetResult.machineSN,
-         ColourType: deliveryTonerGetResult.colourType,
-         TotalColour : 0,
-         BW: Number($("#toner_BW").val())
-      };
-      console.log(Item);
+      deliveryTonerGetResult.bw = Number($("#toner_BW").val());
+      deliveryTonerGetResult.colourTotal = 0;
+      //Item = {
+      //   MachineId: deliveryTonerGetResult.machineId,
+      //   MachineSN: deliveryTonerGetResult.machineSN,
+      //   ColourType: deliveryTonerGetResult.colourType,
+      //   TotalColour : 0,
+      //   BW: Number($("#toner_BW").val())
+      //};
+      //console.log(Item);
+
       $("#AddRemoveItem").append(
          `<tr>
-         <td class = "text-center machineSN" id="machineSN_${i}">${Item.MachineSN}</td>
-         <td class = "text-center colourType" id="colourType_${i}">${Item.ColourType}</td>
-         <td class = "text-center bw" id="bw_${i}">${Item.BW}</td>
-         <td class = "text-center totalColour" id="totalColour_${i}">${Item.TotalColour}</td>
+         <td class = "text-center machineSN" id="machineSN_${i}">${deliveryTonerGetResult.machineSN}</td>
+         <td class = "text-center colourType" id="colourType_${i}">${deliveryTonerGetResult.colourType}</td>
+         <td class = "text-center bw" id="bw_${i}">${deliveryTonerGetResult.bw}</td>
+         <td class = "text-center totalColour" id="totalColour_${i}">${deliveryTonerGetResult.colourTotal}</td>
          <td class="text-center td2">
 		      <button type="button" name="add" class="btn btn-sm btn-outline-danger waves-effect remove-tr" id="remove-tr">
 			      Remove
@@ -287,35 +288,35 @@ function CalculateAddItemContainer() {
 	      </td>
       </tr`
       );
-      ItemContainer.push(Item);
+      ItemContainer.push(deliveryTonerGetResult);
       i++;
    }
    else {
-      var Cyan = Number($("#toner_C").val());
-      var Magenta = Number($("#toner_M").val());
-      var Yellow = Number($("#toner_Y").val());
-      var Black = Number($("#toner_K").val());
-      var Totalcolour = Cyan + Magenta + Yellow + Black;
+      // value assign to a global object that comes from deliveryToner();
+      deliveryTonerGetResult.cyan = Number($("#toner_C").val());
+      deliveryTonerGetResult.magenta = Number($("#toner_M").val());
+      deliveryTonerGetResult.yellow = Number($("#toner_Y").val());
+      deliveryTonerGetResult.black = Number($("#toner_K").val());
+      deliveryTonerGetResult.colourTotal = Number($("#toner_C").val()) + Number($("#toner_M").val()) + Number($("#toner_Y").val()) + Number($("#toner_K").val());
 
-      Item = {
-         MachineId: deliveryTonerGetResult.machineId,
-         MachineSN: deliveryTonerGetResult.machineSN,
-         ColourType: deliveryTonerGetResult.colourType,
-         BW: 0,
-         //Cyan: Number($("#toner_C").val()),
-         //Magenta: Number($("#toner_M").val()),
-         //Yellow: Number($("#toner_Y").val()),
-         //Black: Number($("#toner_K").val()),
-         //TotalColour: (Number($("#toner_C").val()) + Number($("#toner_M").val() + Number($("#toner_Y").val()) + Number($("#toner_K").val()))
-         TotalColour: Totalcolour
-      };
-      console.log(Item);
+      //Item = {
+      //   MachineId: deliveryTonerGetResult.machineId,
+      //   MachineSN: deliveryTonerGetResult.machineSN,
+      //   ColourType: deliveryTonerGetResult.colourType,
+      //   BW: 0,
+      //   //Cyan: Number($("#toner_C").val()),
+      //   //Magenta: Number($("#toner_M").val()),
+      //   //Yellow: Number($("#toner_Y").val()),
+      //   //Black: Number($("#toner_K").val()),
+      //   //TotalColour: (Number($("#toner_C").val()) + Number($("#toner_M").val() + Number($("#toner_Y").val()) + Number($("#toner_K").val()))
+      //   TotalColour: Totalcolour
+      //};
       $("#AddRemoveItem").append(
          `<tr>
-         <td class = "text-center machineSN" id="machineSN_${i}">${Item.MachineSN}</td>
-         <td class = "text-center colourType" id="colourType_${i}">${Item.ColourType}</td>
-         <td class = "text-center bw" id="bw_${i}">${Item.BW}</td>
-         <td class = "text-center totalColour" id="totalColour_${i}">${Item.TotalColour}</td>
+         <td class = "text-center machineSN" id="machineSN_${i}">${deliveryTonerGetResult.machineSN}</td>
+         <td class = "text-center colourType" id="colourType_${i}">${deliveryTonerGetResult.colourType}</td>
+         <td class = "text-center bw" id="bw_${i}">${deliveryTonerGetResult.bw}</td>
+         <td class = "text-center totalColour" id="totalColour_${i}">${deliveryTonerGetResult.colourTotal}</td>
          <td class="text-center td2">
 		      <button type="button" name="add" class="btn btn-sm btn-outline-danger waves-effect remove-tr">
 			      Remove
@@ -323,7 +324,7 @@ function CalculateAddItemContainer() {
 	      </td>
       </tr`
       );
-      ItemContainer.push(Item);
+      ItemContainer.push(deliveryTonerGetResult);
       i++;
    }
    ResetInput();
@@ -338,11 +339,12 @@ $(document).on('click', '.remove-tr', function () {
 });
 
 function SubmitDeliveryToner() {
+   console.log(ItemContainer);
    $.ajax({
       url: BaseApi + "delivery-toner",
       type: "POST",
       dataType: "json",
-      contentType: "application/x-www-form-urlencoded",
+      contentType: "application/json",
       data: JSON.stringify(ItemContainer),
       success: function (res) {
          console.log(res);
