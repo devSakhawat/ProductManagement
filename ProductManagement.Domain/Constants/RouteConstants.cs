@@ -52,7 +52,8 @@ namespace ProductManagement.Domain.Constants
       public const string CreateDeliveryToner = "delivery-toner";
       public const string ReadDeliveryToners = "delivery-toners";
       public const string ReadDeliveryTonerByKey = "delivery-toner/key/{key}";
-      public const string ReadDeliveryTonerByMachine = "delivery-toner/machine/{machineId}";
+      public const string ReadDeliveryTonerByMachineId = "delivery-toner/machine/{machineId}";
+      public const string ReadDeliveryTonerByDeliveryDate = "delivery-toner/deliveryDate";
       public const string UpdateDeliveryToner = "delivery-toner/{key}";
       public const string DeleteDeliveryToner = "delivery-toner/{key}";
       #endregion

@@ -5,6 +5,7 @@ using ProductManagement.Domain.Constants;
 using ProductManagement.Domain.Dtos;
 using ProductManagement.Domain.Entities;
 using System.Reflection.PortableExecutable;
+using System.Runtime.Serialization;
 
 namespace ProductManagement.API.Controllers
 {
@@ -22,14 +23,14 @@ namespace ProductManagement.API.Controllers
       // Object to be saved in the table as a row.
       [HttpPost]
       [Route(RouteConstants.CreateDeliveryToner)]
-      public async Task<IActionResult> CreateDeliveryToner(DeliveryToner deliveryToner)
+      public async Task<IActionResult> CreateDeliveryToner(DeliveryTonerDto deliveryToner)
       {
          try
          {
             if (deliveryToner == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
-            if(IsDeliverd() == true)
+            if(IsDeliverd(deliveryToner) == true)
                return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
 
             double totalColourToner = Convert.ToDouble(deliveryToner.Cyan)
@@ -54,10 +55,11 @@ namespace ProductManagement.API.Controllers
             //deliveryToner.DateModified = DateTime.Now.Date;
 
 
-            context.DeliveryTonerRepository.Add(deliveryToner);
+            //context.DeliveryTonerRepository.Add(deliveryToner);
+
             await context.SaveChangesAsync();
 
-            return CreatedAtAction("ReadDeliveryByKey", new { key = deliveryTonerInDb.DeliveryTonerId}, deliveryTonerInDb);
+            return CreatedAtAction("ReadDeliveryTonerByKey", new { key = deliveryTonerInDb.DeliveryTonerId}, deliveryTonerInDb);
          }
          catch (Exception)
          {
@@ -110,11 +112,38 @@ namespace ProductManagement.API.Controllers
          }
       }
 
+
+      // URL: toner-api/delivery-toner/machine/{machineId}
+      // when machine will select than this mathod will call by ajax.
+      [HttpGet]
+      [Route(RouteConstants.ReadDeliveryTonerByMachineId)]
+      public async Task<IActionResult> GetDeliveryTonerByMachineId(int machineId)
+      {
+         try
+         {
+            if(machineId <= 0)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+
+           var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByMachineId(machineId);
+
+            if (deliveryToner == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+            
+            //List<DeliveryTonerDto> deliveryTonerDtoList = deliveryToner.ToList();
+
+            return Ok(deliveryToner);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
       // URL: toner-api/delivery-toner/machine/{machineId}
       // last delivary toner month value
       [HttpGet]
-      [Route(RouteConstants.ReadDeliveryTonerByMachine)]
-      public async Task<IActionResult> ReadDeliveryTonerByMachineId(DateTime deliveryDate)
+      [Route(RouteConstants.ReadDeliveryTonerByDeliveryDate)]
+      public async Task<IActionResult> ReadDeliveryTonerByDeliveryDate(DateTime deliveryDate)
       {
          try
          {
@@ -122,60 +151,54 @@ namespace ProductManagement.API.Controllers
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
 
             var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByDeliveryDate();
-            
 
-            if (deliveryToner == null)
+            //var currentMonth = Convert.ToDateTime(deliveryToner.DateCreated).Month;
+
+            foreach (var deliveryTonerItem in deliveryToner)
             {
-               var deliveryTonerDto = new DeliveryTonerDto
-               {
-                  CurrentMonth = 0
-               };
-               return Ok(deliveryTonerDto);
-            }
-            else
-            {
-               var currentMonth = Convert.ToDateTime(deliveryToner.DateCreated).Month;
-               if (deliveryToner.Machine.ColourType == ColourType.BW)
+               if (deliveryTonerItem.ColourType == ColourType.BW)
                {
                   var deliveryTonerDto = new DeliveryTonerDto
                   {
-                     DeliveryTonerId = deliveryToner.DeliveryTonerId,
-                     BW = deliveryToner.BW,
-                     MachineId = deliveryToner.MachineId,
-                     DateCreated = deliveryToner.DateCreated,
-                     CreatedBy = deliveryToner.CreatedBy,
+                     DeliveryTonerId = deliveryTonerItem.DeliveryTonerId,
+                     BW = deliveryTonerItem.BW,
+                     MachineId = deliveryTonerItem.MachineId,
+                     DateCreated = deliveryTonerItem.DateCreated,
+                     CreatedBy = deliveryTonerItem.CreatedBy,
 
-                     ColourType = deliveryToner.Machine.ColourType,
-                     MachineSN = deliveryToner.Machine.MachineSN,
-                     CurrentMonth = currentMonth
+                     ColourType = deliveryTonerItem.ColourType,
+                     MachineSN = deliveryTonerItem.MachineSN,
+                     CurrentMonth = deliveryTonerItem.CurrentMonth
                   };
                   return Ok(deliveryTonerDto);
                }
-               else if (deliveryToner.Machine.ColourType == ColourType.Colour)
-               {
-                  var deliveryTonerDto = new DeliveryTonerDto
-                  {
-                     DeliveryTonerId = deliveryToner.DeliveryTonerId,
-                     Cyan = deliveryToner.Cyan,
-                     Magenta = deliveryToner.Magenta,
-                     Yellow = deliveryToner.Yellow,
-                     Black = deliveryToner.Black,
-                     ColourTotal = deliveryToner.ColourTotal,
-                     MachineId = deliveryToner.MachineId,
-                     DateCreated = deliveryToner.DateCreated,
-                     CreatedBy = deliveryToner.CreatedBy,
+               //else if (deliveryToner.Machine.ColourType == ColourType.Colour)
+               //{
+               //   var deliveryTonerDto = new DeliveryTonerDto
+               //   {
+               //      DeliveryTonerId = deliveryToner.DeliveryTonerId,
+               //      Cyan = deliveryToner.Cyan,
+               //      Magenta = deliveryToner.Magenta,
+               //      Yellow = deliveryToner.Yellow,
+               //      Black = deliveryToner.Black,
+               //      ColourTotal = deliveryToner.ColourTotal,
+               //      MachineId = deliveryToner.MachineId,
+               //      DateCreated = deliveryToner.DateCreated,
+               //      CreatedBy = deliveryToner.CreatedBy,
 
-                     ColourType = deliveryToner.Machine.ColourType,
-                     MachineSN = deliveryToner.Machine.MachineSN,
-                     CurrentMonth = currentMonth
-                  };
-                  return Ok(deliveryTonerDto);
-               }
+               //      ColourType = deliveryToner.Machine.ColourType,
+               //      MachineSN = deliveryToner.Machine.MachineSN,
+               //      CurrentMonth = currentMonth
+               //   };
+               //   return Ok(deliveryTonerDto);
+               //}
                else
                {
                   return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
                }
             }
+            
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
          catch (Exception)
          {
@@ -255,19 +278,30 @@ namespace ProductManagement.API.Controllers
          }
       }
 
-
-      private bool IsDeliverd()
+      // check duplicate data 
+      private bool IsDeliverd(DeliveryTonerDto deliveryToner)
       {
          try
          {
             //var ShortDateString = DateTime.Now.ToShortDateString().Replace("-", string.Empty);
             //var checkCurrentMonthTonerDelivery = ShortDateString.Substring(2, ShortDateString.Length - 2);
             //var data = context.DeliveryTonerRepository.GetDeliveryTonerByCurrentMonth();
-            var month = context.TonerUsageRepository.GetTonerUsageByCurrentMonth();
-            var currentMonth = DateTime.Now.Month;
 
-            if (month == currentMonth)
-               return true;
+            var lastDeliveryByMachine = context.DeliveryTonerRepository.GetLastDeliveryByMachineId(deliveryToner.MachineId);
+            if (lastDeliveryByMachine == null)
+            {
+               return false;
+            }
+            else
+            {
+               var lastDeliveryMonth = lastDeliveryByMachine.DateCreated.Value.Month;
+               var lastDeliveryYear = lastDeliveryByMachine.DateCreated.Value.Year;
+
+               var currentMonth = DateTime.Now.Month;
+               var currentYear = DateTime.Now.Year;
+               if (currentMonth == lastDeliveryMonth && currentYear == lastDeliveryYear)
+                  return true;
+            }
             return false;
          }
          catch (Exception)

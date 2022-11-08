@@ -11,6 +11,10 @@ namespace ProductManagement.DAL.Constracts
       // datetime will be splite for month and year only.
       Task<IEnumerable<DeliveryTonerDto>> GetDeliveryTonerByDeliveryDate();
 
+      Task<IEnumerable<DeliveryTonerDto>> GetDeliveryTonerByMachineId(int machineId);
+
+      DeliveryToner GetLastDeliveryByMachineId(int machineId);
+
       Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
    }
 }

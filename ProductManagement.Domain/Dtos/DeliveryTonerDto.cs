@@ -42,7 +42,7 @@ namespace ProductManagement.Domain.Dtos
       public ColourType ColourType { get; set; }
 
       // current month toner delivery yes or no
-      public int CurrentMonth { get; set; }
-      public int CurrentYear { get; set; }
+      public int? CurrentMonth { get; set; }
+      public int? CurrentYear { get; set; }
    }
 }

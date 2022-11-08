@@ -10,7 +10,7 @@
       <div class="content-body">
          <div class="card">
             <div class="card-header">
-               <h4 class="card-title">Toner Usage Calculation Page</h4><hr />
+               <h4 class="card-title text-center">Toner Delivery</h4><hr />
             </div>
             <div class="card-body">
                <div class="table-responsive" id="TonerUsageForm">
@@ -32,12 +32,12 @@
                                  <option value="">Select Machine</option>
                               </select>
                            </th>
-                           <th width="25%"><button type="button" onclick="CalculateValues()" class="btn btn-primary waves-effect waves-float waves-light">Add One Info</button></th>
+                           <th width="25%" class="text-center"><button width="100%" type="button" onclick="CalculateAddItemContainer()" class="btn btn-outline-success waves-effect">Add Item</button></th>
                         </tr>
                      </thead>
                      <thead id="DeliveryToner">
                      </thead>
-                  </table>
+                  </table>@*
 
                   <table class="table bg-light-secondary">
                      <thead>
@@ -53,19 +53,17 @@
                            </th>
                         </tr>
                      </thead>
-                  </table>
+                  </table>*@
 
                   <table class="table table-bordered mt-1" id="AddRemoveItem">
                      <tr>
                         <th class="wd-15p">Machine SN</th>
-                        <th class="wd-15p">InMachine Toner</th>
-                        <th class="wd-15p">Monthly Counter</th>
-                        <th class="wd-15p">Monthly Counter</th>
-                        <th class="wd-15p">Item Total</th>
-                        <th class="wd-15p">Item Profite</th>
-                        <th class="wd-10p td2 wd-100p"></th>
+                        <th class="wd-15p">Colour Type</th>
+                        <th class="wd-15p">Black & White</th>
+                        <th class="wd-15p">Total Colour</th>
+                        <th class="wd-10p td2 wd-100p">Remove Item</th>
                      </tr>
-                     <tfoot>
+                     @*<tfoot>
                         <tr>
                            <td class="wd-15p PrevBWToner" id="prevBWToner"><input type="text" class="form-control" placeholder="Previous BW Toner" /></td>
                            <td class="wd-15p PrevColourToner" id="prevColourToner">Previous Colour Toner</td>
@@ -75,8 +73,13 @@
                            <td class="wd-15p MachineTotalToner" id="machineTotalToner">Machine Toner</td>
                            <td class="wd-10p td2 wd-100p"></td>
                         </tr>
-                     </tfoot>
+                     </tfoot>*@
                   </table>
+                  @*<div class="row my-2 justify-content-center">*@
+                     <div class="my-2 d-grid offset-4 col-lg-4 col-md-4 ">
+                        <button type="submit" onclick="SubmitDeliveryToner()" class="btn btn-outline-primary waves-effect">Submit</button>
+                     @*</div>*@
+                  </div>
                </div>
             </div>
          </div>
