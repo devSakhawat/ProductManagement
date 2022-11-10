@@ -1,20 +1,20 @@
-﻿using ProductManagement.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductManagement.Domain.Dtos;
+using ProductManagement.Domain.Entities;
 
 namespace ProductManagement.DAL.Constracts
 {
    public interface IDeliveryTonerRepository : IRepository<DeliveryToner>
    {
-      public Task<DeliveryToner> GetDeliveryTonerByKey(int key);
+      Task<DeliveryToner> GetDeliveryTonerByKey(int key);
 
       // to check that database contain current month delivery toner or not.
       // datetime will be splite for month and year only.
-      public int GetDeliveryTonerByCurrentMonth();
+      Task<IEnumerable<DeliveryTonerDto>> GetDeliveryTonerByDeliveryDate();
 
-      public Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
+      Task<IEnumerable<DeliveryTonerDto>> GetDeliveryTonerByMachineId(int machineId);
+
+      DeliveryToner GetLastDeliveryByMachineId(int machineId);
+
+      Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
    }
 }

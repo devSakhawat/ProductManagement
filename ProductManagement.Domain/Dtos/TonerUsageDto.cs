@@ -16,6 +16,8 @@ namespace ProductManagement.Domain.Dtos
       // if(machine is colour: field value will be fillup with colourTotal vlaue
       // from DeliveryToner Table
       public int DeliveryTonerId { get; set; }
+
+      // from machine table
       public int MachineId { get; set; }
 
       public double? TonnerPercentageBW { get; set; }
@@ -25,10 +27,12 @@ namespace ProductManagement.Domain.Dtos
       public double? TonnerPercentageBlack { get; set; }
       public double? TotalColurTonerParcentage { get; set; }
 
+      // from machine table.
       // this field will come form machin table machine colourtype.
       public ColourType ColourType { get; set; }
 
-      // form DeliveryToner table database take last 2nd row data.
+      // form DeliveryToner table database. skip(1).take(1)
+      // readOnly field.
       public int PreviousDeliveryToner { get; set; }
 
       // last month delivery unused toner

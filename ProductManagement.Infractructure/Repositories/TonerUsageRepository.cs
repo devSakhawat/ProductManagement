@@ -5,13 +5,13 @@ using ProductManagement.Domain.Entities;
 
 namespace ProductManagement.DAL.Repositories
 {
-   public class TonerUsageRepository : Repository<TonerUsageDto>, ITonerUsageRepository
+   public class TonerUsageRepository : Repository<TonerUsage>, ITonerUsageRepository
    {
       public TonerUsageRepository(TonerContext context) : base(context)
       {
       }
 
-      public async Task<TonerUsageDto> GetTonerUsageByKey(int key)
+      public async Task<TonerUsage> GetTonerUsageByKey(int key)
       {
          try
          {
@@ -44,23 +44,27 @@ namespace ProductManagement.DAL.Repositories
          }
       }
 
-      public async Task<TonerUsageDto> TonerUsagesDto()
+      //public async Task<TonerUsageDto> TonerUsagesDto()
+      public List<TonerUsageDto> TonerUsagesDto()
       {
          try
          {
+            //var tryFromOne = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Take(2).Include(dl => dl.Machine).ToList();
+            //var preDelToner = Convert.ToInt16(tryFromOne.Skip(1).Select(dl => dl.BW));
+            //var curDelToner = Convert.ToInt16(tryFromOne.FirstOrDefault().BW);
 
-            var tryFromOne = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Take(2).Include(dl => dl.Machine).ToList();
-            var preDelToner = Convert.ToInt16(tryFromOne.Skip(1).Select(dl => dl.BW));
-            var curDelToner = Convert.ToInt16(tryFromOne.FirstOrDefault().BW);
 
             //var prevDelTonerWithMachine = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Skip(1).Take(1).Include(dl => dl.Machine);
-            var prevDelTonerWithMachine = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Skip(1).Include(dl => dl.Machine).FirstOrDefault();
-            var preDeliveryToner = await context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).FirstOrDefaultAsync();
+
+            //var prevDelTonerWithMachine = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Skip(1).Include(dl => dl.Machine).FirstOrDefault();
+            //var preDeliveryToner = await context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).FirstOrDefaultAsync();
+
+
             //var machineTypeWithOutInclude = preDeliveryToner.Select(dl => dl.Machine.ColourType);
             // firstordefult korle select kora lagena.
             //var machineType =Convert.ToInt32(prevDelTonerWithMachine.Select(dl => dl.Machine.ColourType));
-            
-            
+
+
             //var machineType = Convert.ToInt32(prevDelTonerWithMachine.Machine.ColourType);
             //if (machineType == Convert.ToInt32(ColourType.BW))
             //{
@@ -79,7 +83,44 @@ namespace ProductManagement.DAL.Repositories
             //                         });
             //}
 
-            return new TonerUsageDto();
+            var toneruseList = context.TonerUsages.Include(td => td.DeliveryToner).ToList();
+
+            //var tonerUsagesDto = (from tu in context.TonerUsages
+            //                      join dt in context.DeliveryToners on tu.DeliveryTonerId equals dt.DeliveryTonerId
+            //                      join m in context.Machines on dt.MachineId equals m.MachineId
+            //                      select new
+            //                      {
+            //                         DeliveryTonerId = toneruseList.DeliveryTonerId,
+            //                         MachineId = dt.MachineId,
+            //                         ColourType = m.ColourType,
+            //                         //PreviousDeliveryToner = prevDelTonerWithMachine.Select(dl => dl.BW),
+            //                         PreviousDeliveryToner = prevDelTonerWithMachine.BW,
+            //                         InHouseToner = tu.InHouse,
+            //                         MonthlyDeliveryToner = preDeliveryToner.BW
+            //                      });
+
+            List<TonerUsageDto> dtoList = new List<TonerUsageDto>();
+            return dtoList;
+         }
+         catch (Exception)
+         {
+            throw;
+         }
+      }
+
+      public ModelsMessage AddTonerUsageDto(TonerUsageDto tonerUsageDto)
+      {
+         try
+         {
+            ModelsMessage modelsMessage = new ModelsMessage();            
+            modelsMessage.Message = "Save Successfully";
+            //modelsMessage.EntityModel = tonerUsageDto;
+            modelsMessage.EntityModel = new TonerUsage();
+            //context.TonerUsages.Add(modelsMessage.EntityModel);
+            //return context.Set<TonerUsageDto>().Add(tonerUsageDto).Entity;
+
+
+            return modelsMessage;
          }
          catch (Exception)
          {

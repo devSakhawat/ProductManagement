@@ -1,0 +1,93 @@
+﻿@model ProductManagement.Domain.Dtos.DeliveryTonerDto
+@{
+   ViewData["Title"] = "DeliveryToner";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+   <div class="content-wrapper">
+      <div class="content-body">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title text-center">Toner Delivery</h4><hr />
+            </div>
+            <div class="card-body">
+               <div class="table-responsive" id="TonerUsageForm">
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="25%">
+                              <select class="form-control" id="CustomerId" onchange="getProject(event)">
+                                 <option value="">Select Customer</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="ProjectId" onchange="getMachineForDelivery(event)">
+                                 <option value="">Select Project</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="MachineId" onchange="deliveryToner(event)">
+                                 <option value="">Select Machine</option>
+                              </select>
+                           </th>
+                           <th width="25%" class="text-center"><button width="100%" type="button" onclick="CalculateAddItemContainer()" class="btn btn-outline-success waves-effect">Add Item</button></th>
+                        </tr>
+                     </thead>
+                     <thead id="DeliveryToner">
+                     </thead>
+                  </table>@*
+
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="33.33%">
+                              <input type="text" class="form-control prevCounter" placeholder="Previous Counter" autocomplete="off" id="PrevCounter" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control curtCounter" placeholder="Current Counter" autocomplete="off" id="CurtCounter" />
+                           </th>
+                           <th width="33.33%">
+                              <input type="text" class="form-control totalCounter" placeholder="Total Counter" autocomplete="off" id="TotalCounter" />
+                           </th>
+                        </tr>
+                     </thead>
+                  </table>*@
+
+                  <table class="table table-bordered mt-1" id="AddRemoveItem">
+                     <tr>
+                        <th class="wd-15p">Machine SN</th>
+                        <th class="wd-15p">Colour Type</th>
+                        <th class="wd-15p">Black & White</th>
+                        <th class="wd-15p">Total Colour</th>
+                        <th class="wd-10p td2 wd-100p">Remove Item</th>
+                     </tr>
+                     @*<tfoot>
+                        <tr>
+                           <td class="wd-15p PrevBWToner" id="prevBWToner"><input type="text" class="form-control" placeholder="Previous BW Toner" /></td>
+                           <td class="wd-15p PrevColourToner" id="prevColourToner">Previous Colour Toner</td>
+                           <td class="wd-15p DeliBWToner" id="deliBWToner">Delivery BW Toner</td>
+                           <td class="wd-15p DeliColourToner" id="deliColourToner">Delivery Colour Toner</td>
+                           <td class="wd-15p InHouseTotalToner" id="inHouseTotalToner">InhouseToner</td>
+                           <td class="wd-15p MachineTotalToner" id="machineTotalToner">Machine Toner</td>
+                           <td class="wd-10p td2 wd-100p"></td>
+                        </tr>
+                     </tfoot>*@
+                  </table>
+                  @*<div class="row my-2 justify-content-center">*@
+                     <div class="my-2 d-grid offset-4 col-lg-4 col-md-4 ">
+                        <button type="submit" onclick="SubmitDeliveryToner()" class="btn btn-outline-primary waves-effect">Submit</button>
+                     @*</div>*@
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END: Content-->
+<!-- START: Jquery-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- END jquery-->
+<script src="~/js/tonerusage.js"></script>

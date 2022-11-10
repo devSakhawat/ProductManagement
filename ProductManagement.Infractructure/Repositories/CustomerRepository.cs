@@ -8,6 +8,7 @@ namespace ProductManagement.DAL.Repositories
       public CustomerRepository(TonerContext context) : base(context)
       {
       }
+
       public async Task<Customer> GetCustomerByKey(int id)
       {
          try
@@ -36,7 +37,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await QueryAsync(c => c.IsDeleted == false, p => p.Projects);
+            return await QueryAsync(c => c.IsDeleted == false);
          }
          catch (Exception)
          {

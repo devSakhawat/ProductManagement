@@ -1,0 +1,40 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+footer.border-top.footer.text-muted.footer-custom {
+   height: 48px;
+}
+
+
+/*  TonerDetailInfo Machine Add*/
+.AddMachine {
+   font-size: 46px;
+   height: 45px;
+   color: #fff;
+   background-color: #7367F0;
+   width: 50px;
+   cursor: pointer;
+}
+
+.txt-center {
+   margin: 0 auto;
+   text-align: center;
+   vertical-align: middle;
+}
+

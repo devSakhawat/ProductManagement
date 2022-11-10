@@ -23,6 +23,7 @@ namespace ProductManagement.Domain.Constants
       public const string CreateProject = "project";
       public const string ReadProjects = "projects";
       public const string ReadProjectByKey = "project/key/{key}";
+      public const string ReadProjectByCustomerId = "project/customers/{key}";
       public const string ReadProjectByProjectName = "project/{projectName}";
       public const string UpdateProject = "project/{key}";
       public const string DeleteProject = "project/{key}";
@@ -32,6 +33,7 @@ namespace ProductManagement.Domain.Constants
       public const string CreateMachine = "machine";
       public const string ReadMachines = "machines";
       public const string ReadMachineByKey = "machine/key/{key}";
+      public const string ReadMachineByMachine = "machine/projects/{key}";
       public const string ReadMachinebyMachineName = "machine/{machineName}";
       public const string UpdateMachine = "machine/{key}";
       public const string DeleteMachine = "machine/{key}";
@@ -39,7 +41,7 @@ namespace ProductManagement.Domain.Constants
 
       #region Toner
       public const string CreateToner = "toner";
-      public const string ReadToner = "toners";
+      public const string ReadToners = "toners";
       public const string ReadTonerByKey = "toner/key/{key}";
       public const string ReadTonerByTonerName = "toner/{tonerName}";
       public const string UpdateToner = "toner/{key}";
@@ -48,8 +50,10 @@ namespace ProductManagement.Domain.Constants
 
       #region DeliveryToner
       public const string CreateDeliveryToner = "delivery-toner";
-      public const string ReadDeliveryToner = "delivery-toners";
+      public const string ReadDeliveryToners = "delivery-toners";
       public const string ReadDeliveryTonerByKey = "delivery-toner/key/{key}";
+      public const string ReadDeliveryTonerByMachineId = "delivery-toner/machine/{machineId}";
+      public const string ReadDeliveryTonerByDeliveryDate = "delivery-toner/deliveryDate";
       public const string UpdateDeliveryToner = "delivery-toner/{key}";
       public const string DeleteDeliveryToner = "delivery-toner/{key}";
       #endregion

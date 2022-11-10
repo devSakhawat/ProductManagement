@@ -1,12 +1,6 @@
 ﻿using ProductManagement.Domain.Constants;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProductManagement.Domain.Entities
 {
@@ -20,7 +14,7 @@ namespace ProductManagement.Domain.Entities
       [Display(Name = "Machine")]
       [ForeignKey("MachineId")]
       public int MachineId { get; set; }
-     
+
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Previous Counter")]
       public long PreviousCounter { get; set; }

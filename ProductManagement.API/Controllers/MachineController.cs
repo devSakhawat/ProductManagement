@@ -79,6 +79,30 @@ namespace ProductManagement.API.Controllers
          }
       }
 
+      // URL: toner-api/machine/project/{key}
+      // Object to be saved in the table as a row.
+      [HttpGet]
+      [Route(RouteConstants.ReadMachineByMachine)]
+      public async Task<IActionResult> ReadMachinesByProjectId(int key)
+      {
+         try
+         {
+            if (key <= 0)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+
+            var machinesByProjectId = await context.MachineRepository.GetMachinByProjectId(key);
+
+            if(machinesByProjectId == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+
+            return Ok(machinesByProjectId);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
       // URL: toner-api/machine/{key}
       // Object to be update in the table as a row.
       [HttpPut]
