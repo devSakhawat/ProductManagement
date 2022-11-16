@@ -26,7 +26,7 @@ namespace ProductManagement.Domain.Entities
       // TonnerPercentage / 100
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Total Counter")]
-      public long MonthlyTotalConter { get; set; }
+      public long MonthlyTotalCounter { get; set; }
 
       // Navigation property
       public virtual Machine? Machine { get; set; }

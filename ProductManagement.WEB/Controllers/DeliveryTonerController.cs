@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductManagement.Domain.Dtos;
+using ProductManagement.WEB.HttpClients;
 
 namespace ProductManagement.WEB.Controllers
 {
    public class DeliveryTonerController : Controller
    {
-      public IActionResult Index()
+      private readonly HttpClient httpClient;
+      public DeliveryTonerController(HttpClient httpClient)
       {
-         return View();
+         this.httpClient = httpClient;
       }
 
-      [HttpGet]
+      public async Task<IActionResult> Index()
+      {
+         List<DeliveryTonerDto> deliveryToner = await new DeliveryTonerHttpClinet(httpClient).GetDeliveryToners();
+         List<DeliveryTonerDto> deliveryToners = new List<DeliveryTonerDto>(deliveryToner.ToList());
+         return View(deliveryToners);
+      }
+
       public IActionResult DeliveryToners()
       {
          return View();

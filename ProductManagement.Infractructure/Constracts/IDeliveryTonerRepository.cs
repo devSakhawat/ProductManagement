@@ -15,6 +15,6 @@ namespace ProductManagement.DAL.Constracts
 
       DeliveryToner GetLastDeliveryByMachineId(int machineId);
 
-      Task<IEnumerable<DeliveryToner>> GetDeliveryToners();
+      Task<IEnumerable<DeliveryTonerDto>> GetDeliveryToners();
    }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductManagement.DAL.Migrations
 {
-    public partial class PercentageBWisnullable : Migration
+    public partial class CreateInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -169,12 +169,12 @@ namespace ProductManagement.DAL.Migrations
                 name: "Toners",
                 columns: table => new
                 {
-                    TonarId = table.Column<int>(type: "int", nullable: false)
+                    TonerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TonarModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SerialNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TonerModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SerialNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Color = table.Column<int>(type: "int", nullable: false),
-                    MachineId = table.Column<int>(type: "int", nullable: false),
+                    MachineId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -183,13 +183,12 @@ namespace ProductManagement.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Toners", x => x.TonarId);
+                    table.PrimaryKey("PK_Toners", x => x.TonerId);
                     table.ForeignKey(
                         name: "FK_Toners_Machines_MachineId",
                         column: x => x.MachineId,
                         principalTable: "Machines",
-                        principalColumn: "MachineId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "MachineId");
                 });
 
             migrationBuilder.CreateTable(
@@ -198,18 +197,18 @@ namespace ProductManagement.DAL.Migrations
                 {
                     TonerUsageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryTonerId = table.Column<int>(type: "int", nullable: false),
+                    MachineId = table.Column<int>(type: "int", nullable: false),
                     PercentageBW = table.Column<double>(type: "float", nullable: true),
-                    PercentageCyan = table.Column<double>(type: "float", nullable: false),
-                    PercentageMagenta = table.Column<double>(type: "float", nullable: false),
-                    PercentageYellow = table.Column<double>(type: "float", nullable: false),
-                    PercentageBlack = table.Column<double>(type: "float", nullable: false),
-                    TotalColurParcentage = table.Column<double>(type: "float", nullable: false),
-                    MonthlyDelivery = table.Column<int>(type: "int", nullable: false),
+                    PercentageCyan = table.Column<double>(type: "float", nullable: true),
+                    PercentageMagenta = table.Column<double>(type: "float", nullable: true),
+                    PercentageYellow = table.Column<double>(type: "float", nullable: true),
+                    PercentageBlack = table.Column<double>(type: "float", nullable: true),
+                    TotalColurParcentage = table.Column<double>(type: "float", nullable: true),
                     InHouse = table.Column<int>(type: "int", nullable: false),
                     MonthlyTotalToner = table.Column<double>(type: "float", nullable: false),
                     MonthlyUsedToner = table.Column<double>(type: "float", nullable: false),
                     TotalToner = table.Column<double>(type: "float", nullable: false),
+                    DeliveryTonerId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -223,7 +222,12 @@ namespace ProductManagement.DAL.Migrations
                         name: "FK_TonerUsages_DeliveryToners_DeliveryTonerId",
                         column: x => x.DeliveryTonerId,
                         principalTable: "DeliveryToners",
-                        principalColumn: "DeliveryTonerId",
+                        principalColumn: "DeliveryTonerId");
+                    table.ForeignKey(
+                        name: "FK_TonerUsages_Machines_MachineId",
+                        column: x => x.MachineId,
+                        principalTable: "Machines",
+                        principalColumn: "MachineId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -261,6 +265,11 @@ namespace ProductManagement.DAL.Migrations
                 name: "IX_TonerUsages_DeliveryTonerId",
                 table: "TonerUsages",
                 column: "DeliveryTonerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TonerUsages_MachineId",
+                table: "TonerUsages",
+                column: "MachineId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

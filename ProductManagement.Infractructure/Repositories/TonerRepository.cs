@@ -19,7 +19,7 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await FirstOrDefaultAsync(t => t.TonarId == key && t.IsDeleted == false);
+            return await FirstOrDefaultAsync(t => t.TonerId == key && t.IsDeleted == false);
          }
          catch (Exception)
          {

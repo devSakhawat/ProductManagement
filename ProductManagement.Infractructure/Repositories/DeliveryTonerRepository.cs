@@ -82,25 +82,6 @@ namespace ProductManagement.DAL.Repositories
                      ModifiedBy = deliveryToner.ModifiedBy
                   });
                }
-               //else if (deliveryToner.DateModified == null)
-               //{
-               //   currentDeliveryToner.Add(new DeliveryTonerDto
-               //   {
-               //      MachineId = deliveryToner.MachineId,
-               //      MachineSN = deliveryToner.MachineSN,
-               //      ColourType = deliveryToner.ColourType,
-               //      DeliveryTonerId = deliveryToner.DeliveryTonerId,
-               //      BW = deliveryToner.BW,
-               //      Cyan = deliveryToner.Cyan,
-               //      Magenta = deliveryToner.Magenta,
-               //      Yellow = deliveryToner.Yellow,
-               //      Black = deliveryToner.Black,
-               //      CurrentMonth = 0,
-               //      CurrentYear = 0,
-               //      DateModified = deliveryToner.DateModified,
-               //      ModifiedBy = deliveryToner.ModifiedBy
-               //   });
-               //}
                else
                {
                   currentDeliveryToner.Add(new DeliveryTonerDto
@@ -202,15 +183,46 @@ namespace ProductManagement.DAL.Repositories
          }
       }
 
-      public async Task<IEnumerable<DeliveryToner>> GetDeliveryToners()
+      public async Task<IEnumerable<DeliveryTonerDto>> GetDeliveryToners()
       {
-         var tryFromOne = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Take(2).Include(dl => dl.Machine).ToList();
-         var preDelToner = Convert.ToInt16(tryFromOne.Skip(1).Select(dl => dl.BW));
-         var curDelToner = Convert.ToInt16(tryFromOne.FirstOrDefault().BW);
+         //var tryFromOne = context.DeliveryToners.OrderByDescending(dl => dl.DateCreated).Take(2).Include(dl => dl.Machine).ToList();
+         //var preDelToner = Convert.ToInt16(tryFromOne.Skip(1).Select(dl => dl.BW));
+         //var curDelToner = Convert.ToInt16(tryFromOne.FirstOrDefault().BW);
 
          try
          {
-            return await QueryAsync(dl => dl.IsDeleted == false, tu => tu.TonerUsages);
+            var deliveryToners = await (from dl in context.DeliveryToners
+                                        join m in context.Machines on dl.MachineId equals m.MachineId
+                                        select new {
+                                           dl.DeliveryTonerId,
+                                           dl.BW,
+                                           dl.Cyan,
+                                           dl.Magenta,
+                                           dl.Yellow,
+                                           dl.Black,
+                                           dl.ColourTotal,
+                                           dl.MachineId,
+                                           m.MachineSN,
+                                           m.ColourType
+                                        }).ToListAsync();
+            List<DeliveryTonerDto> deliveryTonersDtO = new List<DeliveryTonerDto>();
+            foreach (var item in deliveryToners)
+            {
+               deliveryTonersDtO.Add(new DeliveryTonerDto {
+                  DeliveryTonerId = item.DeliveryTonerId,
+                  BW = item.BW,
+                  Cyan = item.Cyan,
+                  Magenta = item.Magenta,
+                  Yellow = item.Yellow,
+                  Black = item.Black,
+                  ColourTotal = item.ColourTotal,
+                  MachineId = item.MachineId,
+                  MachineSN = item.MachineSN,
+                  ColourType = item.ColourType,
+               });
+
+            }
+            return deliveryTonersDtO;
          }
          catch (Exception)
          {

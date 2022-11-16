@@ -33,7 +33,8 @@ namespace ProductManagement.Domain.Constants
       public const string CreateMachine = "machine";
       public const string ReadMachines = "machines";
       public const string ReadMachineByKey = "machine/key/{key}";
-      public const string ReadMachineByMachine = "machine/projects/{key}";
+      public const string ReadMachineByProjectId = "machine/projects/{key}";
+      public const string ReadUsageDetailByProjectId = "machine/project/{key}";
       public const string ReadMachinebyMachineName = "machine/{machineName}";
       public const string UpdateMachine = "machine/{key}";
       public const string DeleteMachine = "machine/{key}";

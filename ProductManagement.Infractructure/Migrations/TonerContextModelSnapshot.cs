@@ -189,7 +189,7 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("MonthlyTotalConter")
+                    b.Property<long>("MonthlyTotalCounter")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PreviousCounter")
@@ -210,11 +210,11 @@ namespace ProductManagement.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CalculationId"), 1L, 1);
 
+                    b.Property<double>("CounterPerToner")
+                        .HasColumnType("float");
+
                     b.Property<long?>("CreatedBy")
                         .HasColumnType("bigint");
-
-                    b.Property<double>("CunterPerToner")
-                        .HasColumnType("float");
 
                     b.Property<DateTime?>("DateCreated")
                         .HasColumnType("smalldatetime");
@@ -286,11 +286,11 @@ namespace ProductManagement.DAL.Migrations
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Toner", b =>
                 {
-                    b.Property<int>("TonarId")
+                    b.Property<int>("TonerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TonarId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TonerId"), 1L, 1);
 
                     b.Property<int>("Color")
                         .HasColumnType("int");
@@ -307,20 +307,21 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MachineId")
+                    b.Property<int?>("MachineId")
                         .HasColumnType("int");
 
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
                     b.Property<string>("SerialNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TonarModel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TonarId");
+                    b.Property<string>("TonerModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TonerId");
 
                     b.HasIndex("MachineId");
 
@@ -344,7 +345,7 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("smalldatetime");
 
-                    b.Property<int>("DeliveryTonerId")
+                    b.Property<int?>("DeliveryTonerId")
                         .HasColumnType("int");
 
                     b.Property<int>("InHouse")
@@ -353,11 +354,11 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("MachineId")
+                        .HasColumnType("int");
+
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("MonthlyDelivery")
-                        .HasColumnType("int");
 
                     b.Property<double>("MonthlyTotalToner")
                         .HasColumnType("float");
@@ -389,6 +390,8 @@ namespace ProductManagement.DAL.Migrations
                     b.HasKey("TonerUsageId");
 
                     b.HasIndex("DeliveryTonerId");
+
+                    b.HasIndex("MachineId");
 
                     b.ToTable("TonerUsages");
                 });
@@ -450,24 +453,26 @@ namespace ProductManagement.DAL.Migrations
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Toner", b =>
                 {
+                    b.HasOne("ProductManagement.Domain.Entities.Machine", "Machines")
+                        .WithMany("Toner")
+                        .HasForeignKey("MachineId");
+
+                    b.Navigation("Machines");
+                });
+
+            modelBuilder.Entity("ProductManagement.Domain.Entities.TonerUsage", b =>
+                {
+                    b.HasOne("ProductManagement.Domain.Entities.DeliveryToner", null)
+                        .WithMany("TonerUsages")
+                        .HasForeignKey("DeliveryTonerId");
+
                     b.HasOne("ProductManagement.Domain.Entities.Machine", "Machine")
-                        .WithMany("Toners")
+                        .WithMany("TonerUsages")
                         .HasForeignKey("MachineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Machine");
-                });
-
-            modelBuilder.Entity("ProductManagement.Domain.Entities.TonerUsage", b =>
-                {
-                    b.HasOne("ProductManagement.Domain.Entities.DeliveryToner", "DeliveryToner")
-                        .WithMany("TonerUsages")
-                        .HasForeignKey("DeliveryTonerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DeliveryToner");
                 });
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Customer", b =>
@@ -488,7 +493,9 @@ namespace ProductManagement.DAL.Migrations
 
                     b.Navigation("ProfitCalculations");
 
-                    b.Navigation("Toners");
+                    b.Navigation("Toner");
+
+                    b.Navigation("TonerUsages");
                 });
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Project", b =>

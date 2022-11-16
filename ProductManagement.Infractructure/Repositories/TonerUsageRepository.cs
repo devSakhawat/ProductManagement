@@ -83,7 +83,7 @@ namespace ProductManagement.DAL.Repositories
             //                         });
             //}
 
-            var toneruseList = context.TonerUsages.Include(td => td.DeliveryToner).ToList();
+            var toneruseList = context.TonerUsages.Include(td => td.Machine).ToList();
 
             //var tonerUsagesDto = (from tu in context.TonerUsages
             //                      join dt in context.DeliveryToners on tu.DeliveryTonerId equals dt.DeliveryTonerId

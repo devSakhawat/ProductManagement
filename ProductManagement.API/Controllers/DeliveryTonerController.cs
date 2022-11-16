@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
+using ProductManagement.DAL;
 using ProductManagement.DAL.Constracts;
 using ProductManagement.Domain.Constants;
 using ProductManagement.Domain.Dtos;
 using ProductManagement.Domain.Entities;
-using System.Reflection.PortableExecutable;
-using System.Runtime.Serialization;
 
 namespace ProductManagement.API.Controllers
 {
@@ -14,6 +13,7 @@ namespace ProductManagement.API.Controllers
    public class DeliveryTonerController : ControllerBase
    {
       private readonly IUnitOfWork context;
+
       public DeliveryTonerController(IUnitOfWork context)
       {
          this.context = context;
@@ -23,43 +23,40 @@ namespace ProductManagement.API.Controllers
       // Object to be saved in the table as a row.
       [HttpPost]
       [Route(RouteConstants.CreateDeliveryToner)]
-      public async Task<IActionResult> CreateDeliveryToner(DeliveryTonerDto deliveryToner)
+      public async Task<IActionResult> CreateDeliveryToner(List<DeliveryTonerDto> deliveryToners)
       {
          try
          {
-            if (deliveryToner == null)
+            if (deliveryToners == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
-            if(IsDeliverd(deliveryToner) == true)
-               return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
-
-            double totalColourToner = Convert.ToDouble(deliveryToner.Cyan)
-               + Convert.ToDouble(deliveryToner.Magenta)
-               + Convert.ToDouble(deliveryToner.Yellow)
-               + Convert.ToDouble(deliveryToner.Black);
-
-            var deliveryTonerInDb = new DeliveryToner
+            foreach (var deliveryToner in deliveryToners)
             {
-               MachineId = deliveryToner.MachineId,
-               BW = Convert.ToDouble(deliveryToner.BW),
-               Cyan = Convert.ToDouble(deliveryToner.Cyan),
-               Magenta = Convert.ToDouble(deliveryToner.Magenta),
-               Yellow = Convert.ToDouble(deliveryToner.Yellow),
-               Black = Convert.ToDouble(deliveryToner.Black),
-               ColourTotal = totalColourToner,
-               DateCreated = DateTime.Now.Date
+               if (IsDeliverd(deliveryToner) == true)
+                  return StatusCode(StatusCodes.Status409Conflict, MessageConstants.DuplicateError);
+
+               double totalColourToner = Convert.ToDouble(deliveryToner.Cyan)
+                  + Convert.ToDouble(deliveryToner.Magenta)
+                  + Convert.ToDouble(deliveryToner.Yellow)
+                  + Convert.ToDouble(deliveryToner.Black);
+
+               var deliveryTonerInDb = new DeliveryToner
+               {
+                  MachineId = deliveryToner.MachineId,
+                  BW = Convert.ToDouble(deliveryToner.BW),
+                  Cyan = Convert.ToDouble(deliveryToner.Cyan),
+                  Magenta = Convert.ToDouble(deliveryToner.Magenta),
+                  Yellow = Convert.ToDouble(deliveryToner.Yellow),
+                  Black = Convert.ToDouble(deliveryToner.Black),
+                  ColourTotal = totalColourToner,
+                  DateCreated = DateTime.Now.Date
+               };
+
+               context.DeliveryTonerRepository.Add(deliveryTonerInDb);
+               await context.SaveChangesAsync();
             };
-            context.DeliveryTonerRepository.Add(deliveryTonerInDb);
 
-            //deliveryToner.ColourTotal = deliveryToner.Cyan + deliveryToner.Magenta + deliveryToner.Yellow + deliveryToner.Black;
-            //deliveryToner.DateModified = DateTime.Now.Date;
-
-
-            //context.DeliveryTonerRepository.Add(deliveryToner);
-
-            await context.SaveChangesAsync();
-
-            return CreatedAtAction("ReadDeliveryTonerByKey", new { key = deliveryTonerInDb.DeliveryTonerId}, deliveryTonerInDb);
+            return RedirectToAction("Index");
          }
          catch (Exception)
          {
@@ -96,7 +93,7 @@ namespace ProductManagement.API.Controllers
       {
          try
          {
-            if(key <= 0)
+            if (key <= 0)
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
 
             var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByKey(key);
@@ -121,15 +118,13 @@ namespace ProductManagement.API.Controllers
       {
          try
          {
-            if(machineId <= 0)
+            if (machineId <= 0)
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
 
-           var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByMachineId(machineId);
+            var deliveryToner = await context.DeliveryTonerRepository.GetDeliveryTonerByMachineId(machineId);
 
             if (deliveryToner == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
-            
-            //List<DeliveryTonerDto> deliveryTonerDtoList = deliveryToner.ToList();
 
             return Ok(deliveryToner);
          }
@@ -197,7 +192,7 @@ namespace ProductManagement.API.Controllers
                   return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
                }
             }
-            
+
             return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
          }
          catch (Exception)
@@ -263,8 +258,8 @@ namespace ProductManagement.API.Controllers
             if (deliveryToner == null)
                return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
 
-            if (deliveryToner.TonerUsages.Where(p => p.IsDeleted == false).ToList().Count() > 0)
-               return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
+            //if (deliveryToner.TonerUsages.Where(p => p.IsDeleted == false).ToList().Count() > 0)
+            //   return StatusCode(StatusCodes.Status405MethodNotAllowed, MessageConstants.DependencyError);
 
             deliveryToner.IsDeleted = true;
 

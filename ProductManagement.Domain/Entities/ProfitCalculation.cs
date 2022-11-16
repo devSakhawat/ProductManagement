@@ -25,7 +25,7 @@ namespace ProductManagement.Domain.Entities
       // paperUsage.MonthlyTotalConter / tonerUsage.MonthlyUsedToner = cunter for per toner
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Counter Per Toner")]
-      public double CunterPerToner { get; set; }
+      public double CounterPerToner { get; set; }
 
       // for bw =  if(CunterPerToner >= 800 ) = profit (yes)
       // colour = if(counterPerToner >= 500) = NonProfit (No)

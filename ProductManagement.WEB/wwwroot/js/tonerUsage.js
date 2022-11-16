@@ -7,8 +7,16 @@ var BaseApi = "https://localhost:7284/toner-api/";
 var currentDate = new Date();
 // store toner use data as container
 var tonerUse = [];
+// get object from array by property value
+var UsageDetail = {};
+
+// current month and year
+var currentMonthNumber = currentDate.getMonth() + 1;
+var currentMonthString = currentDate.toLocaleString("default", { month: "long" })
+var currentYear = new Date().getFullYear();
 
 
+// Get Customers list
 function getCustomers() {
    $("#CustomerId option").remove();
 
@@ -28,7 +36,7 @@ function getCustomers() {
       }
    });
 };
-
+// get Project list based on projectId
 function getProject(e) {
    var CustomerId = e.target.value;
    $("#ProjectId option").remove();
@@ -51,23 +59,24 @@ function getProject(e) {
    });
 };
 
-
-
+// get project base current month machine usage toner list
 function getMachine(e) {
    var ProjectId = e.target.value;
    $("#MachineId option").remove();
 
    $.ajax({
-      url: BaseApi + "machine/projects/" + ProjectId,
+      url: BaseApi + "machine/project/" + ProjectId,
       type: "GET",
       dataType: "json",
       contextType: "application/json",
       data: { key: ProjectId },
       success: function (res) {
-         tonerUse.push(res);
+         $.each(res, function(index, v) {
+            tonerUse.push(v);
+         });
          $("#MachineId").append($("<option>").text("Select Machine").attr({ "value": "" }));
          $.each(res, function (index, v) {
-            $("#MachineId").append($("<option>").text(v.machineSN).attr({ "value": v.colourType}));
+            $("#MachineId").append($("<option>").text(v.machineSN).attr({ "value": v.machineId }));
          });
       },
       error: function (err) {
@@ -78,57 +87,81 @@ function getMachine(e) {
 
 //================= Page count Calculation ===============================
 function getToner(e) {
-   var colourType = e.target.value;
+   var machine = parseInt(e.target.value);
 
-   var currentMonth = new Date().getMonth() + 1;
-   var returnMonth = 0;
-   $.ajax({
-      url: BaseApi + "delivery-toner/machine/{machineId}",
-      type : "GET",
-      dataType: "json",
-      contentType: "application/json",
-      success: function (res) {
-         console.log(res);
-         /*returnMonth = res;*/
-      },
-      error: function (err) {
-         console.log(err);
-      }
-   });
+   // get object from array by property value
+   UsageDetail = tonerUse.find(item => item.machineId === machine);
+   console.log(UsageDetail);
 
-   if (parseInt(colourType) == 0) {
+   // condition check for database contain current month data or not
+   if (currentMonthNumber == UsageDetail.deliveryMonth && currentYear == UsageDetail.deliveryYear) {
       $("#TonerPercentage tr:eq(0)").remove();
+      $("#PrevCounter").val('');
 
       $("#TonerPercentage").append(
-         `<tr id="tonerPercentage">
+         `<tr id="deliveryTonerItem">
             <td colspan=4">
-               <input type="text" class="form-control" placeholder="Black N White" autocomplete="off" id="txt_C" />
-            </td>
-         </tr`
-      );
-   }
-
-   if (parseInt(colourType) == 1) {
-      $("#TonerPercentage tr:eq(0)").remove();
-
-      $("#TonerPercentage").append(
-         `<tr id="tonerPercentage">
-            <td width="25%">
-               <input class="form-control" placeholder="Cyan" autocomplete="off" id="txt_C" />
-            </td>
-            <td width="25%">
-               <input class="form-control" placeholder="Magenta" autocomplete="off" id="txt_M" />
-            </td>
-            <td width="25%">
-               <input class="form-control" placeholder="Yellow" autocomplete="off" id="txt_Y" />
-            </td>
-            <td width="25%">
-               <input class="form-control" placeholder="Black" autocomplete="off" id="txt_K" />
+               <div class="alert alert-primary" role="alert">
+                  You allready insert <b style="font-color: black">${currentMonthString}</b> month delivery toner for <b>${UsageDetail.machineSN}</b>.
+               </div>
             </td>
          </tr>`
       );
    }
+   else {
+      if (currentMonthNumber != UsageDetail.deliveryMonth) {
+         $("#TonerPercentage tr:eq(0)").remove();
+
+         if (UsageDetail.colourType == 0) {
+            $("#PrevCounter").val('');
+            $("#TonerPercentage").append(
+               `<tr id="deliveryTonerItem">
+               <td colspan=4">
+                  <input class="form-control" placeholder="Black and White" autocomplete="off" id="toner_BW" />
+               </td>
+            </tr>`
+            );
+            $("#PrevCounter").val(UsageDetail.currentCounter);
+         }
+         else {
+            $("#PrevCounter").val('');
+            $("#TonerPercentage").append(
+               `<tr id="deliveryTonerItem">
+               <td width="25%">
+                  <input class="form-control" placeholder="Cyan" autocomplete="off" id="toner_C" />
+               </td>
+               <td width="25%">
+                  <input class="form-control" placeholder="Magenta" autocomplete="off" id="toner_M" />
+               </td>
+               <td width="25%">
+                  <input class="form-control" placeholder="Yellow" autocomplete="off" id="toner_Y" />
+               </td>
+               <td width="25%">
+                  <input class="form-control" placeholder="Black" autocomplete="off" id="toner_K" />
+               </td>
+            </tr>`
+            );
+            $("#PrevCounter").val(UsageDetail.currentCounter);
+         }
+      };
+
+      //$.ajax({
+      //   url: BaseApi + "delivery-toner/machine/" + machine,
+      //   type: "GET",
+      //   dataType: "json",
+      //   contentType: "application/json",
+      //   data: { machineId: machine },
+      //   success: function (res) {
+      //      console.log(res);
+      //      /*returnMonth = res;*/
+      //   },
+      //   error: function (err) {
+      //      console.log(err);
+      //   }
+      //});
+   }
 }
+
 
 //================= Page count Calculation ===============================
 $(".curtCounter, .prevCounter, .totalCounter").on("keydown keyup click", Counteralculation);
@@ -137,6 +170,10 @@ function Counteralculation() {
    var totalColourToner = Number($("#CurtCounter").val()) - Number($("#PrevCounter").val());
    $("#TotalCounter").val(totalColourToner);
 }
+
+//================= Post Usage Value ===============================
+
+
 
 function CalculateValues() {
    var cyan = $("#txt_C").val();
@@ -182,7 +219,6 @@ function getMachineForDelivery(e) {
 
 //================  without data how pass perameter to api   ===========================
 // global varial for post
-/*var postColourType = {};*/
 
 function deliveryToner(e) {
    var machineId = e.target.value;
@@ -194,10 +230,6 @@ function deliveryToner(e) {
       success: function (res) {
          // insert result value to golobal variable
          deliveryTonerGetResult = res.find(obj => obj);
-         var currentMonthNumber = currentDate.getMonth() + 1;
-         var currentMonthString = currentDate.toLocaleString("default", { month: "long" });
-
-         //var result = res.find(obj => obj);
 
          // condition check for database contain current month data or not
          //if (currentMonthNumber == result.currentMonth) {
@@ -293,24 +325,12 @@ function CalculateAddItemContainer() {
    }
    else {
       // value assign to a global object that comes from deliveryToner();
-      deliveryTonerGetResult.cyan = Number($("#toner_C").val());
-      deliveryTonerGetResult.magenta = Number($("#toner_M").val());
-      deliveryTonerGetResult.yellow = Number($("#toner_Y").val());
-      deliveryTonerGetResult.black = Number($("#toner_K").val());
-      deliveryTonerGetResult.colourTotal = Number($("#toner_C").val()) + Number($("#toner_M").val()) + Number($("#toner_Y").val()) + Number($("#toner_K").val());
-
-      //Item = {
-      //   MachineId: deliveryTonerGetResult.machineId,
-      //   MachineSN: deliveryTonerGetResult.machineSN,
-      //   ColourType: deliveryTonerGetResult.colourType,
-      //   BW: 0,
-      //   //Cyan: Number($("#toner_C").val()),
-      //   //Magenta: Number($("#toner_M").val()),
-      //   //Yellow: Number($("#toner_Y").val()),
-      //   //Black: Number($("#toner_K").val()),
-      //   //TotalColour: (Number($("#toner_C").val()) + Number($("#toner_M").val() + Number($("#toner_Y").val()) + Number($("#toner_K").val()))
-      //   TotalColour: Totalcolour
-      //};
+      deliveryTonerGetResult.cyan = parseFloat($("#toner_C").val());
+      deliveryTonerGetResult.magenta = parseFloat($("#toner_M").val());
+      deliveryTonerGetResult.yellow = parseFloat($("#toner_Y").val());
+      deliveryTonerGetResult.black = parseFloat($("#toner_K").val());
+      deliveryTonerGetResult.colourTotal = parseFloat($("#toner_C").val()) + parseFloat($("#toner_M").val()) + parseFloat($("#toner_Y").val()) + parseFloat($("#toner_K").val());
+      
       $("#AddRemoveItem").append(
          `<tr>
          <td class = "text-center machineSN" id="machineSN_${i}">${deliveryTonerGetResult.machineSN}</td>
@@ -345,7 +365,9 @@ function SubmitDeliveryToner() {
       type: "POST",
       dataType: "json",
       contentType: "application/json",
+      /*contentType: "application/x-www-form-urlencoded",*/
       data: JSON.stringify(ItemContainer),
+      /*data: "{deliveryToner : " + JSON.stringify(ItemContainer) + "}",*/
       success: function (res) {
          console.log(res);
          location.reload();
@@ -357,7 +379,6 @@ function SubmitDeliveryToner() {
    
 }
 
-
 //$("#AddRemoveItem").on("click", ".remove-tr", removeItemTr);
 //function removeItemTr() {
 //   $("#remove-tr").parents('tr').remove();
@@ -365,11 +386,26 @@ function SubmitDeliveryToner() {
 //   console.log(ItemContainer);
 //}
 
-// look carefully. which id i was selected and 
+// look carefully. which id i was selected and
 //$("#remove-tr").on("click", function () {
 //   $(this).parents('tr').remove();
 //});
 
+//================  post DeliveryToner  ====================
+//function getDeliveryToenrs() {
+//   $.ajax({
+//      url: BaseApi + "delivery-toners",
+//      typ: "POST",
+//      dataType: "json",
+//      contentType: "application/json",
+//      success: function (res) {
+//         console.log(res);
+//      },
+//      error: function (err) {
+//         console.log(err);
+//      }
+//   });
+//}
 
 
 

@@ -1,3 +1,5 @@
+using ProductManagement.WEB.HttpClients;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

@@ -1,4 +1,5 @@
-﻿using ProductManagement.Domain.Entities;
+﻿using ProductManagement.Domain.Dtos;
+using ProductManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace ProductManagement.DAL.Constracts
       Task<Machine> GetMachinByKey(int key);
 
       Task<IEnumerable<Machine>> GetMachinByProjectId(int key);
+
+      Task<IEnumerable<TonerUsageDetailsDto>> GetUsageDetailByProjectId(int key);
 
       Task<Machine> GetMachinByMahcineName(string machineSN);
 

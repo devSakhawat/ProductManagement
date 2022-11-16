@@ -19,8 +19,8 @@ namespace ProductManagement.Domain.Entities
       // if(machine is colour: field value will be fillup with colourTotal vlaue
       // from DeliveryToner Table
 
-      [ForeignKey("DeliveryTonerId")]
-      public int DeliveryTonerId { get; set; }
+      [ForeignKey("MachineId")]
+      public int MachineId { get; set; }
 
       [Display(Name = "Percentage BW")]
       public Nullable<double> PercentageBW { get; set; }
@@ -50,9 +50,9 @@ namespace ProductManagement.Domain.Entities
 
       // This field will be readonly and comes DeliveryToner table last record. if BW type machine bw column
       // value comes to field or if colour type ColourTotal value will comes to field.
-      [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
-      [Display(Name = "Delivery Toner")]
-      public int MonthlyDelivery { get; set; }
+      //[Required(ErrorMessage = MessageConstants.RequiredFieldError)]
+      //[Display(Name = "Delivery Toner")]
+      //public int MonthlyDelivery { get; set; }
 
       // last month delivery unused toner
       public int InHouse { get; set; }
@@ -72,7 +72,6 @@ namespace ProductManagement.Domain.Entities
       public double TotalToner { get; set; }
 
       //Navigation property
-      //public virtual Machine Machine { get; set; }
-      public virtual DeliveryToner? DeliveryToner { get; set; }
+      public virtual Machine Machine { get; set; }
    }
 }
