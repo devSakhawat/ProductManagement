@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProductManagement.Domain\ProductManagement.Domain.csproj" />
     <ProjectReference Include="..\ProductManagement.Infractructure\ProductManagement.DAL.csproj" />
+    <ProjectReference Include="..\ProductManagement.Utilities\ProductManagement.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

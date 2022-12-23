@@ -38,7 +38,7 @@ namespace ProductManagement.Domain.Entities
       [ForeignKey("ProjectId")]
       public virtual Project? Project { get; set; }
 
-      public virtual IEnumerable<Toner>? Toner { get; set; }
+      public virtual IEnumerable<MachineToner>? Toner { get; set; }
       public virtual IEnumerable<DeliveryToner>? DeliveryToners { get; set; }
       public virtual IEnumerable<TonerUsage>? TonerUsages { get; set; }
       public virtual IEnumerable<PaperUsage>? PaperUsages { get; set; }

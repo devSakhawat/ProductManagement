@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProductManagement.DAL.Migrations
 {
-    public partial class CreateInitial : Migration
+    public partial class ChangecolumnnameIsFrofitabletoIsProfitable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -121,7 +121,7 @@ namespace ProductManagement.DAL.Migrations
                     MachineId = table.Column<int>(type: "int", nullable: false),
                     PreviousCounter = table.Column<long>(type: "bigint", nullable: false),
                     CurrentCounter = table.Column<long>(type: "bigint", nullable: false),
-                    MonthlyTotalConter = table.Column<long>(type: "bigint", nullable: false),
+                    MonthlyTotalCounter = table.Column<long>(type: "bigint", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -146,8 +146,8 @@ namespace ProductManagement.DAL.Migrations
                     CalculationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MachineId = table.Column<int>(type: "int", nullable: false),
-                    CunterPerToner = table.Column<double>(type: "float", nullable: false),
-                    IsFrofitable = table.Column<bool>(type: "bit", nullable: false),
+                    CounterPerToner = table.Column<double>(type: "float", nullable: false),
+                    IsProfitable = table.Column<bool>(type: "bit", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -208,7 +208,6 @@ namespace ProductManagement.DAL.Migrations
                     MonthlyTotalToner = table.Column<double>(type: "float", nullable: false),
                     MonthlyUsedToner = table.Column<double>(type: "float", nullable: false),
                     TotalToner = table.Column<double>(type: "float", nullable: false),
-                    DeliveryTonerId = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "smalldatetime", nullable: true),
                     CreatedBy = table.Column<long>(type: "bigint", nullable: true),
                     DateModified = table.Column<DateTime>(type: "smalldatetime", nullable: true),
@@ -218,11 +217,6 @@ namespace ProductManagement.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TonerUsages", x => x.TonerUsageId);
-                    table.ForeignKey(
-                        name: "FK_TonerUsages_DeliveryToners_DeliveryTonerId",
-                        column: x => x.DeliveryTonerId,
-                        principalTable: "DeliveryToners",
-                        principalColumn: "DeliveryTonerId");
                     table.ForeignKey(
                         name: "FK_TonerUsages_Machines_MachineId",
                         column: x => x.MachineId,
@@ -262,11 +256,6 @@ namespace ProductManagement.DAL.Migrations
                 column: "MachineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TonerUsages_DeliveryTonerId",
-                table: "TonerUsages",
-                column: "DeliveryTonerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TonerUsages_MachineId",
                 table: "TonerUsages",
                 column: "MachineId");
@@ -274,6 +263,9 @@ namespace ProductManagement.DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DeliveryToners");
+
             migrationBuilder.DropTable(
                 name: "PaperUsages");
 
@@ -285,9 +277,6 @@ namespace ProductManagement.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "TonerUsages");
-
-            migrationBuilder.DropTable(
-                name: "DeliveryToners");
 
             migrationBuilder.DropTable(
                 name: "Machines");

@@ -2,3 +2,9 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+//$(document).ready(function () {
+//   $("#alert").delay(1000).slideUp(200, function () {
+//      $(this).alert('close');
+//   });
+//});

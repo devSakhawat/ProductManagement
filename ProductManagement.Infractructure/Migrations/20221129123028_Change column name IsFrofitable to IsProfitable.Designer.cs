@@ -12,8 +12,8 @@ using ProductManagement.DAL;
 namespace ProductManagement.DAL.Migrations
 {
     [DbContext(typeof(TonerContext))]
-    [Migration("20221115022852_cunter to counter in profite calculation")]
-    partial class cuntertocounterinprofitecalculation
+    [Migration("20221129123028_Change column name IsFrofitable to IsProfitable")]
+    partial class ChangecolumnnameIsFrofitabletoIsProfitable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -191,7 +191,7 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<long?>("ModifiedBy")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("MonthlyTotalConter")
+                    b.Property<long>("MonthlyTotalCounter")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PreviousCounter")
@@ -227,7 +227,7 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsFrofitable")
+                    b.Property<bool>("IsProfitable")
                         .HasColumnType("bit");
 
                     b.Property<int>("MachineId")
@@ -347,9 +347,6 @@ namespace ProductManagement.DAL.Migrations
                     b.Property<DateTime?>("DateModified")
                         .HasColumnType("smalldatetime");
 
-                    b.Property<int?>("DeliveryTonerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("InHouse")
                         .HasColumnType("int");
 
@@ -390,8 +387,6 @@ namespace ProductManagement.DAL.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("TonerUsageId");
-
-                    b.HasIndex("DeliveryTonerId");
 
                     b.HasIndex("MachineId");
 
@@ -464,10 +459,6 @@ namespace ProductManagement.DAL.Migrations
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.TonerUsage", b =>
                 {
-                    b.HasOne("ProductManagement.Domain.Entities.DeliveryToner", null)
-                        .WithMany("TonerUsages")
-                        .HasForeignKey("DeliveryTonerId");
-
                     b.HasOne("ProductManagement.Domain.Entities.Machine", "Machine")
                         .WithMany("TonerUsages")
                         .HasForeignKey("MachineId")
@@ -480,11 +471,6 @@ namespace ProductManagement.DAL.Migrations
             modelBuilder.Entity("ProductManagement.Domain.Entities.Customer", b =>
                 {
                     b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("ProductManagement.Domain.Entities.DeliveryToner", b =>
-                {
-                    b.Navigation("TonerUsages");
                 });
 
             modelBuilder.Entity("ProductManagement.Domain.Entities.Machine", b =>

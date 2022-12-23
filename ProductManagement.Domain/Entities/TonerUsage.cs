@@ -62,7 +62,7 @@ namespace ProductManagement.Domain.Entities
       [Display(Name = "Toner Stock")]
       public double MonthlyTotalToner { get; set; }
 
-      // hidden field. for profite calculation
+      // hidden field. for profite calculation ()
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       public double MonthlyUsedToner { get; set; }
 

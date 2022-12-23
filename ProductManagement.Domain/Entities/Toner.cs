@@ -24,10 +24,6 @@ namespace ProductManagement.Domain.Entities
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       public ColourType Color { get; set; }
 
-      // 
-      public int? MachineId { get; set; }
-
-      // Navigation Property
-      public virtual Machine? Machines { get; set; }
+      public virtual IEnumerable<MachineToner?> MachineToners { get; set; }
    }
 }

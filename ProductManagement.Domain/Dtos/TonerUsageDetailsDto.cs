@@ -46,6 +46,9 @@ namespace ProductManagement.Domain.Dtos
       public DateTime? TonerUsageDateModified { get; set; }
       public long? TonerUsageModifiedBy { get; set; }
 
+      public int TonerUsageMonth { get; set; }
+      public int TonerUsageYear { get; set; }
+
       //--- PaperUsage
       public int PaperUsageId { get; set; }
       public long PreviousCounter { get; set; }
@@ -57,15 +60,18 @@ namespace ProductManagement.Domain.Dtos
       public DateTime? PaperUsageDateModified { get; set; }
       public long? PaperUsageModifiedBy { get; set; }
 
+      public int PaperUsageMonth { get; set; }
+      public int PaperUsageYear { get; set; }
+
       // --- ProfiteCalculation
       public int CalculationId { get; set; }
       public double CunterPerToner { get; set; }
-      public bool IsFrofitable { get; set; }
+      public bool IsProfitable { get; set; }
 
-      public DateTime? ProfiteCalculationDateCreated { get; set; }
-      public long? ProfiteCalculationCreatedBy { get; set; }
-      public DateTime? ProfiteCalculationDateModified { get; set; }
-      public long? ProfiteCalculationModifiedBy { get; set; }
+      public DateTime? ProfiteDateCreated { get; set; }
+      public long? ProfiteCreatedBy { get; set; }
+      public DateTime? ProfiteDateModified { get; set; }
+      public long? ProfiteModifiedBy { get; set; }
 
       // --- table types
       //public Machine Machines { get; set; }

@@ -1,0 +1,108 @@
+﻿@using ProductManagement.Utilities
+@model IEnumerable<ProductManagement.Domain.Entities.Customer>
+
+@{
+   ViewBag.Title = "Customer List";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+      <!--PAGE TITLE-->
+      <div class="display-6">Customer</div>
+      <hr />
+
+      <!--ALERT-->
+      @if (Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.UnauthorizedAttemptOfRecordUpdateError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.InvalidParameterError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.DependencyError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.DuplicateError)
+      {
+         <div class="alert alert-danger alert-dismissible fade show" id="alert" role="alert">
+            <i class="bi bi-check-circle-fill"></i>&nbsp; @TempData[SessionConstants.MessageKey]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      }
+
+      @if (Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordDeleted || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordUpdated || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordSaved)
+      {
+         <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
+            <i class="bi bi-check-circle-fill"></i>&nbsp; @TempData[SessionConstants.MessageKey]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      }
+
+      <!-- CUSTOMER -->
+      <div class="card shadow-sm mb-1">
+         <div class="card-body">
+            <!--TABLE-->
+            <table class="table">
+               <thead>
+                  <tr>
+                     <th>
+                        @Html.DisplayNameFor(model => model.CustomerName)
+                     </th>
+                     <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                     </th>
+                      <!--CREATE Customer-->
+                     <th>
+                        <a asp-action="Create" asp-controller="Customer" class="btn btn-dark btn-sm float-start">
+                           <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Add Customer
+                        </a>
+                     </th>
+                  </tr>
+               </thead>
+
+               <tbody>
+                  @foreach (var item in Model)
+                  {
+                     <tr>
+                        <td>
+                           @Html.DisplayFor(modelItem => item.CustomerName)
+                        </td>
+                        <td>
+                           @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+
+                        <!--ACTION-->
+                        <td>
+                           <!-- EDIT -->
+                           <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-sm btn-outline-dark ">
+                              <i class="bi bi-pencil-square"></i>&nbsp;Edit
+                           </a>
+
+                           <!-- DELETE -->
+                           <a asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-sm btn-outline-danger ">
+                              <i class="bi bi-trash"></i>&nbsp;Delete
+                           </a>
+
+                           <!-- Project -->
+                           <a asp-controller="Project" asp-action="Index" asp-route-customerId="@item.CustomerId" class="btn btn-sm btn-outline-success">
+                              &nbsp;Project
+                           </a>
+                        </td>
+                     </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+</div>
+<!-- START: Jquery-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@*<script src="~/js/site.js"></script>*@
+
+<script>
+@*   $(document).ready(function() {
+       $("#alert").delay(1000).slideUp(200, function () {
+           $(this).alert('close');
+       });
+   });*@
+
+
+ @*    window.setTimeout(function() {
+           $('.alert').remove('fast');
+         }, 2000);*@
+
+       $(".alert").delay(1000).fadeTo(1000, 500).slideUp(500, function () {
+           $(this).alert('close');
+       });
+
+</script>

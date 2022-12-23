@@ -22,15 +22,15 @@ namespace ProductManagement.Domain.Entities
       [ForeignKey("MachineId")]
       public int MachineId { get; set; }
 
-      // paperUsage.MonthlyTotalConter / tonerUsage.MonthlyUsedToner = cunter for per toner
+      // paperUsage.MonthlyTotalCounter / tonerUsage.MonthlyUsedToner = cunter for per toner
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Counter Per Toner")]
       public double CounterPerToner { get; set; }
 
-      // for bw =  if(CunterPerToner >= 800 ) = profit (yes)
-      // colour = if(counterPerToner >= 500) = NonProfit (No)
+      // for bw =  if(CunterPerToner >= 600 ) = profit (yes)
+      // colour = if(counterPerToner >= 400) = NonProfit (No)
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
-      public bool IsFrofitable { get; set; }
+      public bool IsProfitable { get; set; }
 
       public virtual Machine? Machine { get; set; }
    }
