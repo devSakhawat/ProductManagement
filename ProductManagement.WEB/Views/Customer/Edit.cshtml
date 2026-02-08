@@ -1,0 +1,60 @@
+﻿@using ProductManagement.Domain.Entities
+@model ProductManagement.Domain.Entities.Customer
+
+@{
+   ViewData["Title"] = "Edit";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+   <div class="col-lg-6 offset-lg-3">
+
+      <!-- Page Title -->
+      <div class="card-title display-6">Edit Customer</div>
+      <hr />
+
+      <!-- Cutomer -->
+      <div class="card shadow-sm mb-1">
+         <form asp-action="Edit" asp-controller="Customer" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="CustomerId" type="hidden" />
+            <div class="ps-2 pe-2">
+
+               <div class="row mb-2">
+                  <!--CUSTOMER NAME:-->
+                  <div class="d-grid">
+                     <label asp-for="CustomerName" class="form-label">Customer Name</label>
+                     <input asp-for="CustomerName" type="text" name="CustomerName" class="form-control" />
+                     <span asp-validation-for="CustomerName" class="text-danger"></span>
+                  </div>
+
+                  <!--Customer Address:-->
+                  <div class="d-grid">
+                     <label asp-for="Address" class="form-label">Customer Address</label>
+                     <input asp-for="Address" type="text" name="Address" class="form-control" />
+                     <span asp-validation-for="Address" class="text-danger"></span>
+                  </div>
+
+                  <!--Customer Phone:-->
+                  <div class="d-grid">
+                     <label asp-for="Phone" class="form-label">Customer Phone</label>
+                     <input asp-for="Phone" type="text" name="Phone" class="form-control" />
+                     <span asp-validation-for="Phone" class="text-danger"></span>
+                  </div>
+
+                  <!--ACTION:-->
+                  <div class="mt-2">
+                     <button asp-controller="Customer" asp-action="Edit" type="submit" class="btn btn-dark">
+                        <i class="bi bi-check-circle"></i>&nbsp;Save&nbsp;
+                     </button>
+
+                     <a asp-controller="Customer" asp-action="Index" class="btn btn-outline-dark">
+                        <i class="bi bi-arrow-left-circle"></i>&nbsp;Back&nbsp;
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>

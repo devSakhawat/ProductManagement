@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ProductManagement.Domain.Dtos.DeliveryTonerDto>
+@{
+   ViewData["Title"] = "Index";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+   <div class="content-wrapper">
+      <div class="content-body">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title text-center">Toner Delivery</h4><hr />
+            </div>
+            <div class="card-body">
+               <div class="table-responsive" id="TonerUsageForm">
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th>
+                              @Html.DisplayNameFor(model => model.MachineSN)
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.ColourTotal)
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.BW)
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.Cyan);
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.Magenta)
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.Yellow)
+                           </th>
+                           <th>
+                              @Html.DisplayNameFor(model => model.Black)
+                           </th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+
+                     <tbody>
+                     @foreach (var item in Model)
+                        {
+                           <tr>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.MachineSN)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.ColourTotal)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.BW)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.Cyan)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.Magenta)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.Yellow)
+                              </td>
+                              <td>
+                                 @Html.DisplayFor(modelItem => item.Black)
+                              </td>
+                              <td>
+                                 <a asp-action="Edit" asp-route-id="@item.DeliveryTonerId" class="btn btn-success">Edit</a> |
+                                 <a asp-action="Details" asp-route-id="@item.DeliveryTonerId" class="btn btn-info fa fa-info">Details</a> |
+                                 <a asp-action="Delete" asp-route-id="@item.DeliveryTonerId" class="btn btn-danger fa fa-trash-o">Delete</a>
+                              </td>
+                           </tr>
+                        }
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END: Content-->
+<!-- START: Jquery-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- END jquery-->
+<script src="~/js/tonerusage.js"></script>

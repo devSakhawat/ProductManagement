@@ -1,0 +1,94 @@
+﻿@using ProductManagement.Utilities
+@model IEnumerable<ProductManagement.Domain.Entities.Machine>
+
+@{
+   ViewBag.Title = "Machine List";
+   Layout = "~/Views/Shared/_Layout.cshtrml";
+}
+
+<div class="row">
+   @*Page Title*@
+   <div class="display-6">Project</div>
+   <hr />
+
+   <!-- ALERT -->
+   @if (Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.UnauthorizedAttemptOfRecordUpdateError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.InvalidParameterError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.DependencyError || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.DuplicateError)
+   {
+      <div class="alert alert-danger alert-dismissible fade show" id="alert" role="alert">
+         <i class="bi bi-check-circle-fill"></i>&nbsp; @TempData[SessionConstants.MessageKey]
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+   }
+
+   @if (Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordDeleted || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordUpdated || Convert.ToString(TempData[SessionConstants.MessageKey]) == MessageConstants.RecordSaved)
+   {
+      <div class="alert alert-success alert-dismissible fade show" id="alert" role="alert">
+         <i class="bi bi-check-circle-fill"></i>&nbsp; @TempData[SessionConstants.MessageKey]
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+   }
+
+   <!-- Project -->
+   <div class="card shadow-sm mb-1">
+      <div class="card-body">
+         <!--TABLE-->
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>
+                     @Html.DisplayNameFor(model => model.MachineModel)
+                  </th>
+                  <th>
+                     @Html.DisplayNameFor(model => model.MachineSN)
+                  </th>
+                  <th>
+                     @Html.DisplayNameFor(model => model.ColourType)
+                  </th>
+                  <th>
+                     @Html.DisplayNameFor(model => model.ProjectId)
+                  </th>
+                  <!--CREATE Customer-->
+                  <th>
+                     <a asp-action="Create" asp-controller="Project" class="btn btn-dark btn-sm float-start">
+                        <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Add Project
+                     </a>
+                  </th>
+               </tr>
+            </thead>
+
+            <tbody>
+               @foreach (var item in Model)
+               {
+                  <tr>
+                     <td>
+                        @Html.DisplayNameFor(model => model.MachineModel)
+                     </td>
+                     <td>
+                        @Html.DisplayNameFor(model => model.MachineSN)
+                     </td>
+                     <td>
+                        @Html.DisplayNameFor(model => model.ColourType)
+                     </td>
+                     <td>
+                        @Html.DisplayNameFor(model => model.ProjectId)
+                     </td>
+
+                     <!--ACTION-->
+                     <td>
+                        <!-- EDIT -->
+                        <a asp-action="Edit" asp-route-id="@item.ProjectId" class="btn btn-sm btn-outline-dark ">
+                           <i class="bi bi-pencil-square"></i>&nbsp;Edit
+                        </a>
+
+                        <!-- DELETE -->
+                        <a asp-action="Delete" asp-route-id="@item.ProjectId" class="btn btn-sm btn-outline-danger ">
+                           <i class="bi bi-trash"></i>&nbsp;Delete
+                        </a>
+                     </td>
+                  </tr>
+               }
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

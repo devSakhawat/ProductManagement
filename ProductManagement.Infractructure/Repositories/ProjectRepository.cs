@@ -13,7 +13,19 @@ namespace ProductManagement.DAL.Repositories
       {
          try
          {
-            return await FirstOrDefaultAsync(p => p.ProjectId == id && p.IsDeleted == false, m => m.Machines);
+            return await FirstOrDefaultAsync(p => p.ProjectId == id && p.IsDeleted == false);
+         }
+         catch (Exception)
+         {
+            throw;
+         }
+      }
+
+      public async Task<IEnumerable<Project>> GetProjectByCustomerId(int id)
+      {
+         try
+         {
+            return await QueryAsync(p => p.CustomerId == id && p.IsDeleted == false);
          }
          catch (Exception)
          {

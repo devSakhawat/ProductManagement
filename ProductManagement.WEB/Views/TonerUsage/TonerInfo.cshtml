@@ -1,0 +1,149 @@
+﻿@model ProductManagement.Domain.Dtos.TonerUsageDetailsDto
+@{
+   ViewData["Title"] = "TonerInfo";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content">
+   <div class="content-wrapper">
+      <div class="content-body">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">Toner Usage Calculation Page</h4><hr />
+            </div>
+            <div class="card-body">
+               <div class="table-responsive" id="TonerUsageForm">
+                  @*Customer N Project N Machine*@
+                  <table class="table bg-light-secondary">
+                     <thead>
+                        <tr>
+                           <th width="25%">
+                              <select class="form-control" id="CustomerId" onchange="getProject(event)">
+                                 <option value="">Select Customer</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="ProjectId" onchange="getMachine(event)">
+                                 <option value="">Select Project</option>
+                              </select>
+                           </th>
+                           <th width="25%">
+                              <select class="form-control" id="MachineId" onchange="getToner(event)">
+                                 <option value="">Select Machine</option>
+                              </select>
+                           </th>
+                           <th width="25%"><button type="button" id="AddUsageDetailItem" onclick="AddUsageDetailItem()" class="btn btn-primary waves-effect waves-float waves-light">Add One Info</button></th>
+                        </tr>
+                     </thead>                     
+                  </table>
+
+                  <table class="table bg-light-secondary" id="MachineToner">
+                     @*<thead class="ps-2">Machine Toner</thead>
+                     <tr id="MachineTonerItem">
+                        <td colspan="4">
+                           <input class="form-control" placeholder="Black N White" autocomplete="off" id="machine_BW" />
+                        </td>
+                     </tr>
+
+                     <tr id="MachineTonerItem">
+                        <td width="25%">
+                           <input class="form-control" placeholder="Cyan" autocomplete="off" id="machine_C" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Magenta" autocomplete="off" id="machine_M" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Yellow" autocomplete="off" id="machine_Y" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Black" autocomplete="off" id="machine_K" />
+                        </td>
+                     </tr>*@
+                  </table>
+
+                  <table class="table bg-light-secondary" id="DeliveryToner">
+                     @*<thead class="ps-2">Delivery Toner</thead>
+                     <tr id="DeliveryTonerItem">
+                        <td colspan="4">
+                           <input class="form-control" placeholder="Black N White" autocomplete="off" id="delivery_BW" />
+                        </td>
+                     </tr>
+
+                     <tr id="DeliveryTonerItem">
+                        <td width="25%">
+                           <input class="form-control" placeholder="Cyan" autocomplete="off" id="delivery_C" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Magenta" autocomplete="off" id="delivery_M" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Yellow" autocomplete="off" id="delivery_Y" />
+                        </td>
+                        <td width="25%">
+                           <input class="form-control" placeholder="Black" autocomplete="off" id="delivery_K" />
+                        </td>
+                     </tr>*@
+                  </table>
+
+                  <table class="table bg-light-secondary" id="PaperCounter">
+                     <thead>
+                        <th colspan="4" class="text-center">Page Counter</th>
+                     </thead>
+                     <tr>
+                        <th width="33.33%">
+                           <input type="text" class="form-control prevCounter" placeholder="Previous Counter" autocomplete="off" id="PrevCounter" readonly />
+                        </th>
+                        <th width="33.33%">
+                           <input type="text" class="form-control curtCounter" placeholder="Current Counter" autocomplete="off" id="CurtCounter" />
+                        </th>
+                        <th width="33.33%">
+                           <input type="text" class="form-control totalCounter" placeholder="Total Counter" autocomplete="off" id="TotalCounter" readonly />
+                        </th>
+                     </tr>
+                  </table>
+
+                  <table class="table table-bordered mt-1" id="AddRemoveUsageDetailItem">
+                     <tr>
+                        <th class="wd-15p">Machine</th>
+                        <th class="wd-15p">InMachine</th>
+                        <th class="wd-15p">Delivery</th>
+                         @*Monthly Total Counter = Current counter - previous counter*@
+                        <th class="wd-15p">Monthly Count</th>
+                        @*Item Profite = monthly total counter / total used toner (per machine)*@
+                        <th class="wd-15p">IsProfitable</th>
+                        <th class="wd-10p">Action</th>
+                     </tr>
+                     
+                     @*<tfoot>
+                        <tr>
+                           <td class="wd-15p PrevBWToner" id="prevBWToner"><input type="text" class="form-control" placeholder="Previous BW Toner" /></td>
+                           <td class="wd-15p PrevColourToner" id="prevColourToner">Previous Colour Toner</td>
+                           <td class="wd-15p DeliBWToner" id="deliBWToner">Delivery BW Toner</td>
+                           <td class="wd-15p DeliColourToner" id="deliColourToner">Delivery Colour Toner</td>
+                           <td class="wd-15p InHouseTotalToner" id="inHouseTotalToner">InhouseToner</td>
+                           <td class="wd-15p MachineTotalToner" id="machineTotalToner">Machine Toner</td>
+                           <td class="wd-10p td2 wd-100p"></td>
+                        </tr>
+                     </tfoot>*@
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END: Content-->
+
+<!-- START: Jquery-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<!-- END jquery-->
+<script src="~/js/tonerusage.js"></script>
+@*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/autofill/2.4.0/js/dataTables.autoFill.min.js"></script>
+*@
+@*<script>
+   $(function () {
+       $('#tblTonerInfo').DataTable();
+   });
+</script>*@
+

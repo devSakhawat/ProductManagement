@@ -1,4 +1,5 @@
-﻿using ProductManagement.Domain.Entities;
+﻿using ProductManagement.Domain.Dtos;
+using ProductManagement.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,14 @@ namespace ProductManagement.DAL.Constracts
 {
    public interface IMachineRepository : IRepository<Machine>
    {
-      public Task<Machine> GetMachinByKey(int key);
+      Task<Machine> GetMachinByKey(int key);
 
-      public Task<Machine> GetMachinByMahcineName(string machineSN);
+      Task<IEnumerable<Machine>> GetMachinByProjectId(int key);
 
-      public Task<IEnumerable<Machine>> GetMachines();
+      Task<IEnumerable<TonerUsageDetailsDto>> GetUsageDetailByProjectId(int key);
+
+      Task<Machine> GetMachinByMahcineName(string machineSN);
+
+      Task<IEnumerable<Machine>> GetMachines();
    }
 }

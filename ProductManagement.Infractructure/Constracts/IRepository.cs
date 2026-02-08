@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using ProductManagement.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace ProductManagement.DAL.Constracts
 {/// <summary>

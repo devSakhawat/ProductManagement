@@ -12,12 +12,12 @@ namespace ProductManagement.DAL.Constracts
    public interface ICustomerRepository : IRepository<Customer>
    {
       //Returns a customer if key matched.
-      public Task<Customer> GetCustomerByKey(int id);
+      Task<Customer> GetCustomerByKey(int id);
 
       // Returns a customer if the name matched.
-      public Task<Customer> GetCustomerByName(string customerName);
+      Task<Customer> GetCustomerByName(string customerName);
 
       // Returns all customer.
-      public Task<IEnumerable<Customer>> GetCustomers();
+      Task<IEnumerable<Customer>> GetCustomers();
    }
 }

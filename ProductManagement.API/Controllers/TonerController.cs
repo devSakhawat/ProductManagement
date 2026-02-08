@@ -30,7 +30,7 @@ namespace ProductManagement.API.Controllers
             context.TonerRepository.Add(toner);
             await context.SaveChangesAsync();
 
-            return CreatedAtAction("ReadTonerByKey", new { key = toner.TonarId}, toner);
+            return CreatedAtAction("ReadTonerByKey", new { key = toner.TonerId}, toner);
          }
          catch (Exception)
          {
@@ -40,8 +40,8 @@ namespace ProductManagement.API.Controllers
       // URL: toner-api/toners
       // return all toners.
       [HttpPost]
-      [Route(RouteConstants.ReadToner)]
-      public async Task<IActionResult> ReadToner()
+      [Route(RouteConstants.ReadToners)]
+      public async Task<IActionResult> ReadToners()
       {
          try
          {
@@ -89,7 +89,7 @@ namespace ProductManagement.API.Controllers
       {
          try
          {
-            if (key != toner.TonarId)
+            if (key != toner.TonerId)
                return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.UnauthorizedAttemptOfRecordUpdateError);
 
             if (await IsDuplicate(toner) == true)

@@ -53,6 +53,29 @@ namespace ProductManagement.API.Controllers
 
       }
 
+      [HttpGet]
+      [Route(RouteConstants.ReadProjectByCustomerId)]
+      public async Task<IActionResult> ReadProjectByCustomerId(int key)
+      {
+         try
+         {
+            if (key <= 0)
+               return StatusCode(StatusCodes.Status400BadRequest, MessageConstants.InvalidParameterError);
+
+            var projectsByCustomerId = await context.ProjectRepository.GetProjectByCustomerId(key);
+
+            if (projectsByCustomerId == null)
+               return StatusCode(StatusCodes.Status404NotFound, MessageConstants.NoMatchFoundError);
+
+            return Ok(projectsByCustomerId);
+         }
+         catch (Exception)
+         {
+            return StatusCode(StatusCodes.Status500InternalServerError, MessageConstants.GenericError);
+         }
+      }
+
+
       // return match first row data.
       [HttpGet]
       [Route(RouteConstants.ReadProjectByKey)]

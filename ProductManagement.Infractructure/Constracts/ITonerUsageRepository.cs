@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace ProductManagement.DAL.Constracts
 {
-   public interface ITonerUsageRepository : IRepository<TonerUsageDto>
+   public interface ITonerUsageRepository : IRepository<TonerUsage>
    {
-      public Task<TonerUsageDto> GetTonerUsageByKey(int key);
+      Task<TonerUsage> GetTonerUsageByKey(int key);
 
-      public int GetTonerUsageByCurrentMonth();
+      int GetTonerUsageByCurrentMonth();
 
-      public Task<TonerUsageDto> TonerUsagesDto();
+      //public Task<TonerUsageDto> TonerUsagesDto();
+      List<TonerUsageDto> TonerUsagesDto();
+
+      ModelsMessage AddTonerUsageDto(TonerUsageDto tonerUsageDto);
    }
 }

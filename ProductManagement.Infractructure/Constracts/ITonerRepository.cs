@@ -9,10 +9,10 @@ namespace ProductManagement.DAL.Constracts
 {
    public interface ITonerRepository : IRepository<Toner>
    {
-      public Task<Toner> GetTonerByKey(int key);
+      Task<Toner> GetTonerByKey(int key);
 
-      public Task<Toner> GetTonerBySerialNo(string serialNo);
+      Task<Toner> GetTonerBySerialNo(string serialNo);
 
-      public Task<IEnumerable<Toner>> GetToners();
+      Task<IEnumerable<Toner>> GetToners();
    }
 }

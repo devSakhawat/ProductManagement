@@ -35,6 +35,5 @@ namespace ProductManagement.Domain.Entities
 
       // Navigation Property
       public virtual Machine? Machine { get; set; }
-      public virtual IEnumerable<TonerUsage>? TonerUsages { get; set; }
    }
 }

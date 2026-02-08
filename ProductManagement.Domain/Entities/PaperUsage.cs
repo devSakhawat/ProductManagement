@@ -1,12 +1,6 @@
 ﻿using ProductManagement.Domain.Constants;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProductManagement.Domain.Entities
 {
@@ -20,7 +14,7 @@ namespace ProductManagement.Domain.Entities
       [Display(Name = "Machine")]
       [ForeignKey("MachineId")]
       public int MachineId { get; set; }
-     
+
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Previous Counter")]
       public long PreviousCounter { get; set; }
@@ -32,7 +26,7 @@ namespace ProductManagement.Domain.Entities
       // TonnerPercentage / 100
       [Required(ErrorMessage = MessageConstants.RequiredFieldError)]
       [Display(Name = "Total Counter")]
-      public long MonthlyTotalConter { get; set; }
+      public long MonthlyTotalCounter { get; set; }
 
       // Navigation property
       public virtual Machine? Machine { get; set; }
